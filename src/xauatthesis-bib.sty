@@ -1,0 +1,52 @@
+\NeedsTeXFormat{LaTeX2e}[2022/06/01]
+\ProvidesFile{xauatthesis-bib.sty}
+  [2026/05/06 v0.2 Bibliography support for XAUAT thesis template]
+
+\IfFileExists{gb7714-2015.bbx}
+  {
+    \xauatifbibauthoryear
+      {
+        \RequirePackage[
+          backend = biber,
+          style = gb7714-2015ay,
+          gbnamefmt = lowercase,
+          sorting = nyt
+        ]{biblatex}
+      }
+      {
+        \RequirePackage[
+          backend = biber,
+          style = gb7714-2015,
+          gbnamefmt = lowercase,
+          sorting = none
+        ]{biblatex}
+      }
+  }
+  {
+    \PackageWarning{xauatthesis-bib}
+      {Cannot find biblatex-gb7714-2015; falling back to numeric style}
+    \xauatifbibauthoryear
+      {
+        \RequirePackage[
+          backend = biber,
+          style = authoryear,
+          sorting = nyt
+        ]{biblatex}
+      }
+      {
+        \RequirePackage[
+          backend = biber,
+          style = numeric,
+          sorting = none
+        ]{biblatex}
+      }
+  }
+
+\newcommand{\XAUATaddbibresource}[1]{\addbibresource{#1}}
+
+\newcommand{\printXAUATbibliography}{%
+  \xauatunnumberedchapter{\xauatBibliographyName}%
+  \printbibliography[heading=none]%
+}
+
+\endinput

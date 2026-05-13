@@ -1,0 +1,13 @@
+﻿{
+    "resolution":  144,
+    "cases":  [
+                  {
+                      "name":  "main-output",
+                      "pages":  5
+                  },
+                  {
+                      "name":  "generated-frontmatter",
+                      "pages":  5
+                  }
+              ]
+}

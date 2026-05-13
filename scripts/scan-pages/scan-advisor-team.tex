@@ -1,0 +1,34 @@
+\makeatletter
+\def\input@path{{../../src/}}
+\makeatother
+\documentclass[
+  degree=doctor,
+  degree-type=academic,
+  media=electronic,
+  review=normal,
+  advisor-mode=team,
+  discipline-type=science
+]{../../xauatthesis}
+
+\input{../../metadata}
+
+\newcommand{\xauatscanwatermark}{%
+  \AddToShipoutPictureFG*{%
+    \AtPageCenter{%
+      \makebox[0pt][c]{%
+        \rotatebox{45}{%
+          \sffamily\bfseries\fontsize{72bp}{72bp}\selectfont
+          \textcolor[gray]{0.82}{scanned}%
+        }%
+      }%
+    }%
+  }%
+}
+
+\begin{document}
+\renewcommand{\thepage}{}
+\makeatletter
+\xauatscanwatermark
+\xauat@makeadvisorteam@normal
+\makeatother
+\end{document}

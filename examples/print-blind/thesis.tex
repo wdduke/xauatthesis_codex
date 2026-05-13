@@ -1,0 +1,43 @@
+\makeatletter
+\def\input@path{{../../}{../../src/}{../../data/}{../../ref/}}
+\makeatother
+
+\documentclass[
+  degree=doctor,
+  degree-type=professional,
+  media=print,
+  review=blind,
+  advisor-mode=team,
+  discipline-type=science
+]{xauatthesis}
+
+\input{metadata}
+\XAUATaddbibresource{../../ref/refs.bib}
+
+\begin{document}
+% 前置复杂页各自独立，便于单独替换扫描件或调整版式。
+\makecover
+\makeadvisorteampage
+\makecommitteepage
+\makecopyrightpage
+
+% 摘要、目录和符号表阶段。
+\frontmatter
+\input{abstract-cn}
+\input{abstract-en}
+\tableofcontents
+\input{denotation}
+
+% 正文阶段。
+\mainmatter
+\input{chap01}
+\input{chap02}
+\printXAUATbibliography
+\input{acknowledgements}
+
+% 附录和后置材料。
+\appendix
+\input{appendix}
+\backmatter
+\input{resume}
+\end{document}

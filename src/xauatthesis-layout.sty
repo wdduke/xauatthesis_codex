@@ -1,0 +1,200 @@
+\NeedsTeXFormat{LaTeX2e}[2022/06/01]
+\ProvidesFile{xauatthesis-layout.sty}
+  [2026/05/06 v0.1 Page layout for XAUAT thesis template]
+
+\InputIfFileExists{xauatthesis-fonts.cfg}
+  {}
+  {
+    \PackageError{xauatthesis-layout}
+      {Cannot find xauatthesis-fonts.cfg}
+      {Keep the font configuration file in src/.}
+  }
+
+\makeatletter
+
+\xauatifprint
+  {
+    \geometry{
+      a4paper,
+      top=3cm,
+      bottom=2cm,
+      inner=2.5cm,
+      outer=2.5cm,
+      bindingoffset=0.5cm,
+      headheight=16pt,
+      headsep=0.5cm,
+      footskip=0.5cm
+    }
+  }
+  {
+    \geometry{
+      a4paper,
+      top=3cm,
+      bottom=2cm,
+      left=2.5cm,
+      right=2.5cm,
+      bindingoffset=0cm,
+      headheight=16pt,
+      headsep=0.5cm,
+      footskip=0.5cm
+    }
+  }
+
+\newcommand{\xauatblankpage}{%
+  \clearpage
+  \thispagestyle{xauat@empty}%
+  \null
+  \clearpage
+}
+\newcommand{\xauatcleardoublepage}{%
+  \xauatifprint{\cleardoublepage}{\clearpage}%
+}
+\providecommand{\phantomsection}{}
+\newcommand{\xauatunnumberedchapter}[1]{%
+  \xauatcleardoublepage
+  \chapter*{#1}%
+  \phantomsection
+  \addcontentsline{toc}{chapter}{#1}%
+  \markboth{#1}{#1}%
+  \thispagestyle{xauat@plain}%
+}
+\newcommand{\xauatprelimchapter}[1]{%
+  \xauatcleardoublepage
+  \chapter*{#1}%
+  \phantomsection
+  \markboth{#1}{#1}%
+  \thispagestyle{xauat@plain}%
+}
+\newcommand{\xauatfrontpagination}{%
+  \xauatcleardoublepage
+  \pagenumbering{Roman}%
+  \pagestyle{xauat@front}%
+}
+\let\xauat@orig@tableofcontents\tableofcontents
+\let\xauat@orig@listoffigures\listoffigures
+\let\xauat@orig@listoftables\listoftables
+\renewcommand{\tableofcontents}{%
+  \xauatcleardoublepage
+  \xauat@orig@tableofcontents
+  \markboth{\xauatContentsName}{\xauatContentsName}%
+  \thispagestyle{xauat@front}%
+}
+\renewcommand{\listoffigures}{%
+  \xauatcleardoublepage
+  \xauat@orig@listoffigures
+  \markboth{\listfigurename}{\listfigurename}%
+  \thispagestyle{xauat@front}%
+}
+\renewcommand{\listoftables}{%
+  \xauatcleardoublepage
+  \xauat@orig@listoftables
+  \markboth{\listtablename}{\listtablename}%
+  \thispagestyle{xauat@front}%
+}
+\newcommand{\listoffiguresandtables}{%
+  \listoffigures
+  \listoftables
+}
+\newcommand{\xauatmaketableofcontents}{\tableofcontents}
+
+\fancypagestyle{xauat@empty}{%
+  \fancyhf{}%
+  \renewcommand{\headrule}{}%
+  \renewcommand{\headrulewidth}{0pt}%
+  \renewcommand{\footrulewidth}{0pt}%
+}
+
+\newcommand{\xauat@headrule}{%
+  \hrule height 1.2pt
+  \vspace{0.6mm}%
+  \hrule height 0.25pt
+}
+\newcommand{\xauat@headerfont}{\songti\zihao{5}}
+\newcommand{\xauat@pagefont}{\rmfamily\zihao{5}}
+
+\fancypagestyle{xauat@front}{%
+  \fancyhf{}%
+  \fancyhead[C]{\xauat@headerfont\leftmark}%
+  \fancyfoot[RO,LE]{\xauat@pagefont\thepage}%
+  \renewcommand{\headrule}{\xauat@headrule}%
+  \renewcommand{\footrulewidth}{0pt}%
+}
+
+\fancypagestyle{xauat@main}{%
+  \fancyhf{}%
+  \fancyhead[CO]{\xauat@headerfont\leftmark}%
+  \fancyhead[CE]{\xauat@headerfont\xauatUniversityCN\xauatDegreePaperCN}%
+  \fancyfoot[RO,LE]{\xauat@pagefont\thepage}%
+  \renewcommand{\headrule}{\xauat@headrule}%
+  \renewcommand{\footrulewidth}{0pt}%
+}
+
+\fancypagestyle{xauat@plain}{%
+  \fancyhf{}%
+  \fancyhead[CO]{\xauat@headerfont\leftmark}%
+  \fancyhead[CE]{\if@mainmatter\xauat@headerfont\xauatUniversityCN\xauatDegreePaperCN\else\xauat@headerfont\leftmark\fi}%
+  \fancyfoot[RO,LE]{\xauat@pagefont\thepage}%
+  \renewcommand{\headrule}{\xauat@headrule}%
+  \renewcommand{\footrulewidth}{0pt}%
+}
+\fancypagestyle{plain}{%
+  \fancyhf{}%
+  \fancyhead[CO]{\xauat@headerfont\leftmark}%
+  \fancyhead[CE]{\if@mainmatter\xauat@headerfont\xauatUniversityCN\xauatDegreePaperCN\else\xauat@headerfont\leftmark\fi}%
+  \fancyfoot[RO,LE]{\xauat@pagefont\thepage}%
+  \renewcommand{\headrule}{\xauat@headrule}%
+  \renewcommand{\footrulewidth}{0pt}%
+}
+
+\makeatletter
+\renewcommand\frontmatter{%
+  \xauatcleardoublepage
+  \@mainmatterfalse
+  \pagenumbering{Roman}%
+  \pagestyle{xauat@front}%
+}
+\renewcommand\mainmatter{%
+  \xauatcleardoublepage
+  \@mainmattertrue
+  \pagenumbering{arabic}%
+  \pagestyle{xauat@main}%
+}
+\renewcommand\backmatter{%
+  \xauatcleardoublepage
+  \@mainmatterfalse
+}
+\makeatother
+
+\renewcommand{\chaptermark}[1]{%
+  \markboth{第\thechapter 章\quad #1}{第\thechapter 章\quad #1}%
+}
+
+\ctexset{
+  chapter = {
+    name = {第,章},
+    number = \arabic{chapter},
+    aftername = \quad,
+    format = \centering\heiti\zihao{3},
+    beforeskip = 0pt,
+    afterskip = 20pt
+  },
+  section = {
+    format = \raggedright\heiti\zihao{4},
+    aftername = \quad
+  },
+  subsection = {
+    format = \raggedright\songti\bfseries\zihao{-4},
+    aftername = \quad
+  }
+}
+
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+\linespread{1.5}
+\setlength{\parindent}{2em}
+
+\AtBeginDocument{\pagestyle{xauat@front}}
+
+\makeatother
+
+\endinput

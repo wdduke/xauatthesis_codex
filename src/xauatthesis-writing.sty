@@ -1,0 +1,54 @@
+\NeedsTeXFormat{LaTeX2e}[2022/06/01]
+\ProvidesFile{xauatthesis-writing.sty}
+  [2026/05/06 v0.1 Body writing tools for XAUAT thesis template]
+
+\makeatletter
+
+\@addtoreset{equation}{chapter}
+\renewcommand{\theequation}{\thechapter-\arabic{equation}}
+\renewcommand{\thefigure}{\thechapter.\arabic{figure}}
+\renewcommand{\thetable}{\thechapter.\arabic{table}}
+\renewcommand{\footnotesize}{\zihao{5}\selectfont}
+\setlength{\footnotesep}{0.6\baselineskip}
+\setlength{\skip\footins}{1.2\baselineskip}
+
+\xauatifhumanities
+  {
+    \renewcommand{\thefootnote}{[\arabic{footnote}]}
+  }
+  {}
+
+\captionsetup{
+  font = {small, stretch = 1.2},
+  labelfont = bf,
+  labelsep = quad,
+  skip = 6pt
+}
+\captionsetup[figure]{name = 图, position = bottom}
+\captionsetup[table]{name = 表, position = top}
+\captionsetup[subfigure]{labelformat = parens, labelsep = space}
+
+\newcommand{\xauattablenote}[1]{%
+  \par\vspace{0.3em}%
+  {\zihao{5}\noindent 注：#1\par}%
+}
+
+\newenvironment{xauatdenotation}{%
+  \xauatunnumberedchapter{\xauatDenotationName}%
+  \renewcommand{\arraystretch}{1.25}%
+  \begin{longtable}
+    {>{\centering\arraybackslash}p{0.22\textwidth}
+     p{0.46\textwidth}
+     >{\centering\arraybackslash}p{0.20\textwidth}}
+    \toprule
+    符号 & 含义 & 单位\\
+    \midrule
+    \endhead
+}{%
+    \bottomrule
+  \end{longtable}
+}
+
+\makeatother
+
+\endinput

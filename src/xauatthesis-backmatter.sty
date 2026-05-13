@@ -1,0 +1,85 @@
+\NeedsTeXFormat{LaTeX2e}[2022/06/01]
+\ProvidesFile{xauatthesis-backmatter.sty}
+  [2026/05/06 v0.1 Back matter tools for XAUAT thesis template]
+
+\makeatletter
+
+\newcommand{\xauat@achievements}{}
+\newcommand{\xauat@acknowledgement}{}
+\newif\ifxauat@achievementsprinted
+\newif\ifxauat@acknowledgementprinted
+\NewEnviron{xauatachievements}{%
+  \global\let\xauat@achievements\BODY
+  \ifxauat@documentstarted
+    \printXAUATachievements
+  \fi
+}
+\NewEnviron{xauatacknowledgement}{%
+  \global\let\xauat@acknowledgement\BODY
+  \ifxauat@documentstarted
+    \printXAUATacknowledgement
+  \fi
+}
+
+\newcommand{\printXAUATachievements}{%
+  \ifxauat@achievementsprinted\else
+    \global\xauat@achievementsprintedtrue
+    \xauatifblind
+      {%
+        \xauatifblindachievementhide
+          {%
+            \PackageWarning{xauatthesis}
+              {Blind review mode hides achievements by default}%
+          }
+          {%
+            \xauatifblindachievementanonymous
+              {%
+                \xauatunnumberedchapter{\xauatAchievementsName}%
+                盲审版科研成果已匿名化处理。%
+              }
+              {%
+                \xauatunnumberedchapter{\xauatAchievementsName}%
+                \xauat@achievements
+              }%
+          }%
+      }
+      {%
+        \xauatunnumberedchapter{\xauatAchievementsName}%
+        \xauat@achievements
+      }%
+  \fi
+}
+
+\newcommand{\printXAUATacknowledgement}{%
+  \ifxauat@acknowledgementprinted\else
+    \global\xauat@acknowledgementprintedtrue
+    \xauatifblind
+      {%
+        \xauatifblindacknowledgementhide
+          {%
+            \PackageWarning{xauatthesis}
+              {Blind review mode hides acknowledgement by default}%
+          }
+          {%
+            \xauatifblindacknowledgementplaceholder
+              {%
+                \xauatunnumberedchapter{\xauatAcknowledgementName}%
+                本页为盲审版致谢占位，不显示可能泄露身份的信息。%
+              }
+              {%
+                \xauatunnumberedchapter{\xauatAcknowledgementName}%
+                \xauat@acknowledgement
+              }%
+          }%
+      }
+      {%
+        \xauatunnumberedchapter{\xauatAcknowledgementName}%
+        \xauat@acknowledgement
+      }%
+  \fi
+}
+\let\printXAUATAcknowledgement\printXAUATacknowledgement
+
+\makeatother
+
+\endinput

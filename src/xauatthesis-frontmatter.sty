@@ -1,0 +1,903 @@
+\NeedsTeXFormat{LaTeX2e}[2022/06/01]
+\ProvidesFile{xauatthesis-frontmatter.sty}
+  [2026/05/06 v0.1 Front matter for XAUAT thesis template]
+
+\makeatletter
+
+\newif\ifxauat@documentstarted
+\AtBeginDocument{\xauat@documentstartedtrue}
+\newcommand{\xauat@abstractcn}{}
+\newcommand{\xauat@abstracten}{}
+\newcommand{\xauat@heitiroman}[1]{\rmfamily\heiti\zihao{#1}}
+\NewEnviron{abstractcn}{%
+  \global\let\xauat@abstractcn\BODY
+  \ifxauat@documentstarted
+    \xauat@makeabstractcn
+  \fi
+}
+\NewEnviron{abstracten}{%
+  \global\let\xauat@abstracten\BODY
+  \ifxauat@documentstarted
+    \xauat@makeabstracten
+  \fi
+}
+
+\newcommand{\xauat@coverrowstrut}{\rule[-0.375cm]{0pt}{1.25cm}}
+\newcommand{\xauat@coverlabelcn}[1]{%
+  \makebox[3.43cm][r]{\heiti\zihao{4}\makebox[4\ccwd][s]{#1}：}%
+}
+\newcommand{\xauat@covervaluecn}[1]{%
+  \underline{\makebox[8.88cm][c]{\xauat@heitiroman{4}#1}}%
+}
+\newcommand{\xauat@coverrowcn}[2]{%
+  \xauat@coverrowstrut\xauat@coverlabelcn{#1} & \xauat@covervaluecn{#2}\\%
+}
+\newcommand{\xauat@covermajorlabelcn}{\xauatifacademic{学科名称}{类别领域}}
+\newcommand{\xauat@placecoverlogocn}{%
+  \AddToShipoutPictureFG*{%
+    \AtPageUpperLeft{%
+      \hspace*{\dimexpr 1in+\oddsidemargin+2.63cm\relax}%
+      \raisebox{\dimexpr -1in-\topmargin-\headheight-\headsep-0.31cm-\height\relax}[0pt][0pt]{%
+        \ifxauat@debug@logobox
+          \begingroup
+            \setlength{\fboxsep}{0pt}%
+            \setlength{\fboxrule}{0.4pt}%
+            \rlap{%
+              \textcolor{red}{%
+                \fbox{\phantom{\includegraphics[width=10.17cm]{xauat-logo-bar.pdf}}}%
+              }%
+            }%
+          \endgroup
+        \fi
+        \includegraphics[width=10.17cm]{xauat-logo-bar.pdf}%
+      }%
+    }%
+  }%
+}
+
+\newsavebox{\xauat@coverinfotablebox}
+
+\newcommand{\xauat@supervisorblockcn}{%
+  \xauatifadvisorteam
+    {\xauat@coverrowcn{导师团队}{\xauatBlindCN{\xauatAdvisorTeamCN}}}
+    {%
+      \xauat@coverrowcn{指导教师}{\xauatBlindCN{\xauatSupervisorCN\quad\xauatSupervisorTitleCN}}%
+      \xauatifassociateadvisor
+        {\xauat@coverrowcn{合作导师}{\xauatBlindCN{\xauatAssociateSupervisorCN}}}
+        {}%
+    }%
+}
+
+\newcommand{\xauat@coverinfotablecn}{%
+  \begingroup
+    \renewcommand{\arraystretch}{1}%
+    \sbox{\xauat@coverinfotablebox}{%
+      \begin{tabular}{@{}m{3.43cm}@{}m{8.88cm}@{}}
+        \xauat@coverrowcn{作者姓名}{\xauatBlindCN{\xauatAuthorCN}}%
+        \xauat@coverrowcn{学\hspace{2\ccwd}号}{\xauatBlindID{\xauatStudentID}}%
+        \xauat@coverrowcn{所在学院}{\xauatBlindCN{\xauatSchoolCN}}%
+        \xauat@coverrowcn{\xauat@covermajorlabelcn}{\xauatMajorValueCN}%
+        \xauat@supervisorblockcn
+        \xauat@coverrowcn{答辩日期}{\xauatDefenseDateCN}%
+      \end{tabular}%
+    }%
+    \ifxauat@debug@covertablebox
+      \begingroup
+        \color{red}%
+        \dimen@=\dimexpr\ht\xauat@coverinfotablebox+\dp\xauat@coverinfotablebox\relax
+        \dimen2=\wd\xauat@coverinfotablebox
+        \dimen4=\dimexpr\dimen@-0.8pt\relax
+        \makebox[0pt][l]{%
+          \raisebox{-\dp\xauat@coverinfotablebox}[0pt][0pt]{%
+            \vbox{%
+              \offinterlineskip
+              \hrule height 0.4pt
+              \hbox to \dimen2{%
+                \vrule width 0.4pt height \dimen4
+                \hfil
+                \vrule width 0.4pt height \dimen4
+              }%
+              \hrule height 0.4pt
+            }%
+          }%
+        }%
+      \endgroup
+    \fi
+    \usebox{\xauat@coverinfotablebox}%
+  \endgroup
+}
+
+\newcommand{\xauat@covertitlecn}[1]{%
+  \begin{minipage}[t][40bp][t]{\textwidth}
+    \centering
+    \rmfamily\xauatcovertitlefont\zihao{3}\setlength{\baselineskip}{24bp}\selectfont
+    #1\par
+  \end{minipage}\par
+}
+
+\newcommand{\xauat@supervisorblocken}{%
+  \xauatifadvisorteam
+    {\xauat@coverauthorlineen{Supervisor Team: \xauatBlindEN{\xauatAdvisorTeamEN}}\\}
+    {%
+      \xauat@coverauthorlineen{Supervisor: \xauatBlindEN{\xauatSupervisorEN}}\\%
+      \xauatifassociateadvisor
+        {\xauat@coverauthorlineen{Associate Supervisor: \xauatBlindEN{\xauatAssociateSupervisorEN}}\\}
+        {}%
+    }%
+}
+
+\newcommand{\xauat@covertitleen}[1]{%
+  \begin{minipage}{0.88\textwidth}
+    \centering\bfseries\zihao{-2}%
+    \setlength{\baselineskip}{1cm}%
+    \setlength{\lineskiplimit}{-100pt}%
+    \setlength{\lineskip}{0pt}%
+    \selectfont #1\par
+  \end{minipage}\par
+}
+\newsavebox{\xauat@enTitleBox}
+\newsavebox{\xauat@enStatementBox}
+\newsavebox{\xauat@enAuthorBox}
+\newsavebox{\xauat@enDisciplineBox}
+\newlength{\xauat@enCoverTopSkip}
+\setlength{\xauat@enCoverTopSkip}{20.3pt}
+\newlength{\xauat@enTitleStatementPreferredGap}
+\setlength{\xauat@enTitleStatementPreferredGap}{5.4cm}
+\newlength{\xauat@enTitleStatementMinGap}
+\setlength{\xauat@enTitleStatementMinGap}{2cm}
+\newlength{\xauat@enTitleStatementGap}
+\newlength{\xauat@enStatementAuthorPreferredGap}
+\setlength{\xauat@enStatementAuthorPreferredGap}{52.3bp}
+\newlength{\xauat@enStatementAuthorGap}
+\newlength{\xauat@enAuthorDisciplinePreferredGap}
+\setlength{\xauat@enAuthorDisciplinePreferredGap}{66bp}
+\newlength{\xauat@enAuthorDisciplineGap}
+\newlength{\xauat@enComponentGapMin}
+\setlength{\xauat@enComponentGapMin}{0bp}
+\newlength{\xauat@enDisciplineBottomGap}
+\setlength{\xauat@enDisciplineBottomGap}{6.8bp}
+\newlength{\xauat@enCoverNaturalHeight}
+\newlength{\xauat@enCoverOverflow}
+\newlength{\xauat@enCoverShrinkRoom}
+\newlength{\xauat@enAuthorLineHeight}
+\setlength{\xauat@enAuthorLineHeight}{1cm}
+\newlength{\xauat@enAuthorLineDepth}
+\setlength{\xauat@enAuthorLineDepth}{0.5cm}
+\newlength{\xauat@enDisciplineLineHeight}
+\setlength{\xauat@enDisciplineLineHeight}{0.5cm}
+\newlength{\xauat@enDisciplineLineDepth}
+\setlength{\xauat@enDisciplineLineDepth}{0.25cm}
+\newcommand{\xauat@coverstatementrowen}[1]{\rule[-0.3815cm]{0pt}{0.763cm}#1}
+\newcommand{\xauat@coverauthorlineen}[1]{%
+  \rule[-\xauat@enAuthorLineDepth]{0pt}{\xauat@enAuthorLineHeight}#1%
+}
+\newcommand{\xauat@coverdisciplinelineen}[1]{%
+  \rule[-\xauat@enDisciplineLineDepth]{0pt}{\xauat@enDisciplineLineHeight}#1%
+}
+\newcommand{\xauat@coverstatementen}{%
+  \begin{tabular}{@{}c@{}}
+    \xauat@coverstatementrowen{A dissertation submitted to}\\
+    \xauat@coverstatementrowen{\xauatUniversityEN}\\
+    \xauat@coverstatementrowen{in partial fulfillment of the requirements}\\
+    \xauat@coverstatementrowen{for the degree of}\\
+    \xauat@coverstatementrowen{\xauatDegreeFullEN}
+  \end{tabular}\par
+}
+\newcommand{\xauat@coverauthoren}{%
+  \begingroup
+  \renewcommand{\arraystretch}{0}%
+  \begin{tabular}{@{}c@{}}
+    \xauat@coverauthorlineen{By}\\
+    \xauat@coverauthorlineen{\xauatBlindEN{\xauatAuthorEN}}\\
+    \xauat@supervisorblocken
+  \end{tabular}%
+  \endgroup\par
+}
+\newcommand{\xauat@coverdisciplineen}{%
+  \begin{minipage}{\textwidth}
+    \centering
+    \setlength{\baselineskip}{0.5cm}%
+    \setlength{\lineskiplimit}{-100pt}%
+    \setlength{\lineskip}{0pt}%
+    \selectfont
+    \xauatMajorValueEN\\
+    \xauatDefenseDateEN\par
+  \end{minipage}\par
+}
+\newcommand{\xauat@shrinkcoverengap}[2]{%
+  \setlength{\xauat@enCoverShrinkRoom}{\dimexpr#1-\xauat@enComponentGapMin\relax}%
+  \ifdim\xauat@enCoverOverflow>0pt
+    \ifdim\xauat@enCoverOverflow<\xauat@enCoverShrinkRoom
+      \setlength{#2}{\dimexpr#1-\xauat@enCoverOverflow\relax}%
+      \setlength{\xauat@enCoverOverflow}{0pt}%
+    \else
+      \setlength{#2}{\xauat@enComponentGapMin}%
+      \addtolength{\xauat@enCoverOverflow}{-\xauat@enCoverShrinkRoom}%
+    \fi
+  \fi
+}
+\newcommand{\xauat@preparecoveren}{%
+  \sbox{\xauat@enTitleBox}{%
+    \begin{minipage}{\textwidth}
+      \centering\rmfamily
+      \xauat@covertitleen{\xauatTitleEN}%
+    \end{minipage}%
+  }%
+  \sbox{\xauat@enStatementBox}{%
+    \begin{minipage}{\textwidth}
+      \centering\rmfamily\zihao{4}\selectfont
+      \xauat@coverstatementen
+    \end{minipage}%
+  }%
+  \sbox{\xauat@enAuthorBox}{%
+    \begin{minipage}{\textwidth}
+      \centering\rmfamily\zihao{4}\selectfont
+      \xauat@coverauthoren
+    \end{minipage}%
+  }%
+  \sbox{\xauat@enDisciplineBox}{%
+    \begin{minipage}{\textwidth}
+      \centering\rmfamily\zihao{4}\selectfont
+      \xauat@coverdisciplineen
+    \end{minipage}%
+  }%
+  \setlength{\xauat@enTitleStatementGap}{\xauat@enTitleStatementPreferredGap}%
+  \setlength{\xauat@enStatementAuthorGap}{\xauat@enStatementAuthorPreferredGap}%
+  \setlength{\xauat@enAuthorDisciplineGap}{\xauat@enAuthorDisciplinePreferredGap}%
+  \setlength{\xauat@enCoverNaturalHeight}{%
+    \dimexpr
+      \xauat@enCoverTopSkip
+      +\ht\xauat@enTitleBox+\dp\xauat@enTitleBox
+      +\xauat@enTitleStatementGap
+      +\ht\xauat@enStatementBox+\dp\xauat@enStatementBox
+      +\xauat@enStatementAuthorGap
+      +\ht\xauat@enAuthorBox+\dp\xauat@enAuthorBox
+      +\xauat@enAuthorDisciplineGap
+      +\ht\xauat@enDisciplineBox+\dp\xauat@enDisciplineBox
+      +\xauat@enDisciplineBottomGap
+    \relax}%
+  \setlength{\xauat@enCoverOverflow}{\dimexpr\xauat@enCoverNaturalHeight-\textheight\relax}%
+  \ifdim\xauat@enCoverOverflow>0pt
+    \setlength{\xauat@enCoverShrinkRoom}{%
+      \dimexpr\xauat@enTitleStatementPreferredGap-\xauat@enTitleStatementMinGap\relax}%
+    \ifdim\xauat@enCoverOverflow<\xauat@enCoverShrinkRoom
+      \setlength{\xauat@enTitleStatementGap}{%
+        \dimexpr\xauat@enTitleStatementPreferredGap-\xauat@enCoverOverflow\relax}%
+      \setlength{\xauat@enCoverOverflow}{0pt}%
+    \else
+      \setlength{\xauat@enTitleStatementGap}{\xauat@enTitleStatementMinGap}%
+      \addtolength{\xauat@enCoverOverflow}{-\xauat@enCoverShrinkRoom}%
+    \fi
+    \xauat@shrinkcoverengap{\xauat@enStatementAuthorPreferredGap}{\xauat@enStatementAuthorGap}%
+    \xauat@shrinkcoverengap{\xauat@enAuthorDisciplinePreferredGap}{\xauat@enAuthorDisciplineGap}%
+  \fi
+}
+
+\newcommand{\xauat@maketitlecn}{%
+  \thispagestyle{xauat@empty}%
+  \xauat@placecoverlogocn
+  \begin{center}
+    % Calibrated on the 1 cm debug grid:
+    % logo lower edge -> degree-paper glyph center ~= 1 cm.
+    \vspace*{2.17cm}
+    {\songti\bfseries\zihao{-1}\linespread{1}\selectfont\xauatDegreePaperCN\par}
+    % degree-paper glyph center -> degree-type glyph center ~= 1 cm.
+    \vspace{4.7pt}
+    {\heiti\zihao{-2}\linespread{1}\selectfont（\xauatDegreeTypeCN）\par}
+    \vspace{48.4bp}
+    \xauat@covertitlecn{\xauatTitleCN}
+    \vspace{52.5bp}
+    \xauat@coverinfotablecn
+  \end{center}
+}
+
+\newcommand{\xauat@maketitleen}{%
+  \thispagestyle{xauat@empty}%
+  \xauat@preparecoveren
+  \noindent\hbox to \textwidth{%
+    \hfil
+    \vbox to \textheight{%
+      \hsize=\textwidth
+      \centering\rmfamily
+      % EN-title: first title-line glyph center -> text block top ~= 1 cm.
+      \vskip\xauat@enCoverTopSkip
+      \usebox{\xauat@enTitleBox}%
+      % Prefer 5.4 cm here, then shrink this gap first when the page is full.
+      \vskip\xauat@enTitleStatementGap
+      \usebox{\xauat@enStatementBox}%
+      \vskip\xauat@enStatementAuthorGap
+      \usebox{\xauat@enAuthorBox}%
+      \vskip\xauat@enAuthorDisciplineGap
+      \usebox{\xauat@enDisciplineBox}%
+      \vskip\xauat@enDisciplineBottomGap
+      \vss
+    }%
+    \hfil
+  }\par
+}
+
+\newcommand{\xauat@advisorteamtitle}{\xauatDegreeNameCN 研究生指导教师团队}
+\newlength{\xauat@reviewPageTitleTopSkip}
+\setlength{\xauat@reviewPageTitleTopSkip}{1.2pt}
+\newlength{\xauat@reviewPageTitlePaperGap}
+\setlength{\xauat@reviewPageTitlePaperGap}{49.5pt}
+\newlength{\xauat@advisorTitleTableGap}
+\setlength{\xauat@advisorTitleTableGap}{32.8pt}
+\newlength{\xauat@reviewPaperTitleBoxHeight}
+\setlength{\xauat@reviewPaperTitleBoxHeight}{1.65cm}
+\newcommand{\xauat@reviewtitlefont}{\xauat@heitiroman{-2}\linespread{1}\selectfont}
+\newcommand{\xauat@reviewpagetitlecn}[1]{%
+  {\xauat@reviewtitlefont #1\par}%
+}
+\newcommand{\xauat@reviewpagepapertitlecn}{%
+  {%
+    \begin{minipage}[t][\xauat@reviewPaperTitleBoxHeight][t]{0.88\textwidth}
+      \centering
+      \xauat@reviewtitlefont
+      \setlength{\baselineskip}{1cm}%
+      \setlength{\lineskiplimit}{-100pt}%
+      \setlength{\lineskip}{0pt}%
+      \xauatTitleCN
+    \end{minipage}\par}%
+}
+\newcommand{\xauat@teamcell}[2]{%
+  \parbox[c][1cm][c]{#1}{\centering #2}%
+}
+\newcommand{\xauat@teamspancell}[2]{%
+  \parbox[c][1cm][c]{\dimexpr #1 - 0.45cm\relax}{\centering #2}%
+}
+\newcommand{\xauat@teammultirowcell}[1]{\shortstack[c]{#1}}
+
+\ExplSyntaxOn
+\tl_new:N \l_xauat_advisor_team_member_rows_tl
+\int_new:N \l_xauat_advisor_team_member_row_count_int
+\cs_new_protected:Npn \xauat_advisor_team_cline_if_not_last:nn #1#2
+  {
+    \int_compare:nNnT {#1} < {#2}
+      { \tl_put_right:Nn \l_xauat_advisor_team_member_rows_tl { \cline { 2-7 } } }
+  }
+\cs_new_protected:Npn \xauat_advisor_team_append_member_row:nnn #1#2#3
+  {
+    \tl_put_right:Nn \l_xauat_advisor_team_member_rows_tl
+      {
+        & \xauat@teamcell {2.00cm} {#1}
+        & \SetCell[c=3]{c,m} \xauat@teamspancell {5.58cm} {#2} & &
+        & \xauat@teamcell {2.18cm} {#3}
+        & \xauat@teamcell {2.62cm} {} \\
+      }
+  }
+\cs_new_protected:Npn \xauat_advisor_team_append_member_item:n #1
+  { \xauat_advisor_team_append_member_row:nnn #1 }
+\cs_new_protected:Npn \xauat_advisor_team_prepare_member_rows:
+  {
+    \tl_clear:N \l_xauat_advisor_team_member_rows_tl
+    \int_set:Nn \l_tmpa_int { \seq_count:N \g_xauat_advisor_team_members_seq }
+    \int_set:Nn \l_tmpb_int { \int_max:nn { 7 } { \l_tmpa_int } }
+    \int_set_eq:NN \l_xauat_advisor_team_member_row_count_int \l_tmpb_int
+    \seq_map_indexed_inline:Nn \g_xauat_advisor_team_members_seq
+      {
+        \xauat_advisor_team_append_member_item:n {##2}
+        \xauat_advisor_team_cline_if_not_last:nn {##1} { \l_tmpb_int }
+      }
+    \int_compare:nNnT { \l_tmpa_int } < { 7 }
+      {
+        \int_step_inline:nnn { \l_tmpa_int + 1 } { 7 }
+          {
+            \xauat_advisor_team_append_member_row:nnn {} {} {}
+            \xauat_advisor_team_cline_if_not_last:nn {##1} { \l_tmpb_int }
+          }
+      }
+  }
+\cs_new:Npn \xauatAdvisorTeamPreparedMemberRowCount
+  { \int_use:N \l_xauat_advisor_team_member_row_count_int }
+\cs_new:Npn \xauatAdvisorTeamPreparedMemberRows
+  { \tl_use:N \l_xauat_advisor_team_member_rows_tl }
+\cs_new_protected:Npn \xauatPrepareAdvisorTeamMemberRows
+  { \xauat_advisor_team_prepare_member_rows: }
+
+\tl_new:N \l_xauat_pdf_page_file_tl
+\keys_define:nn { xauat / pdf-page }
+  {
+    file .tl_set:N = \l_xauat_pdf_page_file_tl,
+    file .value_required:n = true,
+    unknown .code:n =
+      {
+        \PackageError { xauatthesis }
+          { Unknown~page~option~'\l_keys_key_str' }
+          { Use~file=<path>~or~remove~the~option. }
+      }
+  }
+\cs_new_protected:Npn \xauat_pdf_page_setup:n #1
+  {
+    \tl_clear:N \l_xauat_pdf_page_file_tl
+    \keys_set:nn { xauat / pdf-page } {#1}
+  }
+\cs_new_protected:Npn \xauat_make_or_include_pdf_page:nnnn #1#2#3#4
+  {
+    \xauat_pdf_page_setup:n {#1}
+    \tl_if_empty:NT \l_xauat_pdf_page_file_tl
+      {
+        \file_if_exist:nT {#3}
+          { \tl_set:Nn \l_xauat_pdf_page_file_tl {#3} }
+      }
+    \tl_if_empty:NTF \l_xauat_pdf_page_file_tl
+      {#4}
+      {
+        \xauatcleardoublepage
+        \phantomsection
+        \markboth{#2}{#2}
+        \includepdf[
+          pages=-,
+          pagecommand={
+            \thispagestyle{xauat@empty}
+          }
+        ]{\l_xauat_pdf_page_file_tl}
+      }
+  }
+\cs_new_protected:Npn \xauat_make_or_include_pdf_page:nnn #1#2#3
+  { \xauat_make_or_include_pdf_page:nnnn {#1} {#2} {} {#3} }
+\ExplSyntaxOff
+\newcommand{\xauat@makeorinclude}[3]{%
+  \csname xauat_make_or_include_pdf_page:nnn\endcsname{#1}{#2}{#3}%
+}
+\newcommand{\xauat@makeorincludeautoscan}[4]{%
+  \csname xauat_make_or_include_pdf_page:nnnn\endcsname{#1}{#2}{#3}{#4}%
+}
+
+\newcommand{\xauat@advisorteamtable}{%
+  \setlength{\tabcolsep}{0pt}%
+  \begingroup
+  \hfuzz=30pt
+  \hbadness=10000
+  \noindent\makebox[\textwidth][c]{%
+    {\xauat@committeefont
+    \begin{tblr}{
+      colspec = {
+        |Q[c,m,wd=3.16cm]
+        |Q[c,m,wd=1.96cm]
+        |Q[c,m,wd=1.34cm]
+        |Q[c,m,wd=3.18cm]
+        |Q[c,m,wd=1.54cm]
+        |Q[c,m,wd=1.55cm]
+        |Q[c,m,wd=2.62cm]|
+      },
+      colsep = 0pt,
+      rowsep = 0pt,
+      rows = {ht=1cm},
+      hlines,
+      vlines,
+    }
+      研究生姓名 & \xauatAuthorCN & 学号 & \xauatStudentID
+        & \SetCell[c=2]{c,m} 责任导师姓名 & & \xauatSupervisorCN \\
+      导师团队名称
+        & \SetCell[c=6]{c,m} \xauatAdvisorTeamNameCN & & & & & \\
+      \SetCell[r=2]{c,m} \xauat@teammultirowcell{导师团队\\带头人}
+        & 姓名 & \SetCell[c=3]{c,m} 学科（专业） & & & 职称 & 签名 \\
+        & \xauatAdvisorTeamLeaderName
+        & \SetCell[c=3]{c,m} \xauatAdvisorTeamLeaderDiscipline & & &
+        \xauatAdvisorTeamLeaderTitle & \\
+      \SetCell[r=7]{c,m} \xauat@teammultirowcell{团队成员\\（可添加）}
+        & \xauatAdvisorTeamMemberNameAt{1}
+        & \SetCell[c=3]{c,m} \xauatAdvisorTeamMemberDisciplineAt{1} & & &
+        \xauatAdvisorTeamMemberTitleAt{1} & \\
+        & \xauatAdvisorTeamMemberNameAt{2}
+        & \SetCell[c=3]{c,m} \xauatAdvisorTeamMemberDisciplineAt{2} & & &
+        \xauatAdvisorTeamMemberTitleAt{2} & \\
+        & \xauatAdvisorTeamMemberNameAt{3}
+        & \SetCell[c=3]{c,m} \xauatAdvisorTeamMemberDisciplineAt{3} & & &
+        \xauatAdvisorTeamMemberTitleAt{3} & \\
+        & \xauatAdvisorTeamMemberNameAt{4}
+        & \SetCell[c=3]{c,m} \xauatAdvisorTeamMemberDisciplineAt{4} & & &
+        \xauatAdvisorTeamMemberTitleAt{4} & \\
+        & \xauatAdvisorTeamMemberNameAt{5}
+        & \SetCell[c=3]{c,m} \xauatAdvisorTeamMemberDisciplineAt{5} & & &
+        \xauatAdvisorTeamMemberTitleAt{5} & \\
+        & \xauatAdvisorTeamMemberNameAt{6}
+        & \SetCell[c=3]{c,m} \xauatAdvisorTeamMemberDisciplineAt{6} & & &
+        \xauatAdvisorTeamMemberTitleAt{6} & \\
+        & \xauatAdvisorTeamMemberNameAt{7}
+        & \SetCell[c=3]{c,m} \xauatAdvisorTeamMemberDisciplineAt{7} & & &
+        \xauatAdvisorTeamMemberTitleAt{7} & \\
+    \end{tblr}}%
+  }\par
+  \endgroup
+}
+
+\newcommand{\xauat@makeadvisorteam@normal}{%
+  \xauatcleardoublepage
+  \phantomsection
+  \markboth{指导教师团队}{指导教师团队}%
+  \thispagestyle{xauat@plain}%
+  \begin{center}
+    \vspace*{\xauat@reviewPageTitleTopSkip}
+    \xauat@reviewpagetitlecn{\xauat@advisorteamtitle}
+    \vspace{\xauat@reviewPageTitlePaperGap}
+    \xauat@reviewpagepapertitlecn
+    \vspace{\xauat@advisorTitleTableGap}
+    \xauat@advisorteamtable
+  \end{center}
+}
+
+\NewDocumentCommand \makeadvisorteampage { O{} } {%
+  \xauatifadvisorteam
+    {%
+      \xauatifblind
+        {}
+        {%
+          \xauat@makeorincludeautoscan
+            {#1}
+            {\xauat@advisorteamtitle}
+            {assets/scan/scan-advisor-team.pdf}
+            {\xauat@makeadvisorteam@normal}
+        }%
+    }
+    {}%
+}
+
+\newcommand{\xauat@committeetitle}{\xauatDegreeNameCN 学位论文答辩委员会}
+\newcommand{\xauat@reviewtablefont}{\xauat@heitiroman{-4}\linespread{1}\selectfont}
+\newcommand{\xauat@committeefont}{\xauat@reviewtablefont}
+\newcommand{\xauat@committeecell}[2]{%
+  \parbox[c][1.3cm][c]{#1}{\centering #2}%
+}
+\newcommand{\xauat@committeespancell}[1]{%
+  \parbox[c][1.3cm][c]{12.1cm}{\centering #1}%
+}
+\newcommand{\xauat@committeemultirowcell}[1]{\shortstack[c]{#1}}
+\newcommand{\xauat@committeeauthorvalue}{%
+  \xauatifconfidential{}{\xauatBlindCN{\xauatAuthorCN}}%
+}
+\newcommand{\xauat@committeedatevalue}{%
+  \xauatifconfidential{}{\xauatDefenseDateCN}%
+}
+\newcommand{\xauat@committeechairname}{%
+  \xauatifconfidential{}{\xauatifblind{}{\xauatCommitteeChairName}}%
+}
+\newcommand{\xauat@committeechairtitle}{%
+  \xauatifconfidential{}{\xauatifblind{}{\xauatCommitteeChairTitle}}%
+}
+\newcommand{\xauat@committeechairaffiliation}{%
+  \xauatifconfidential{}{\xauatifblind{}{\xauatCommitteeChairAffiliation}}%
+}
+\newcommand{\xauat@committeemembervalue}[1]{%
+  \xauatifconfidential{}{\xauatifblind{}{#1}}%
+}
+\newcommand{\xauat@committeerow}[3]{%
+  & \xauat@committeecell{2.87cm}{\xauat@committeemembervalue{#1}}
+  & \xauat@committeecell{2.71cm}{\xauat@committeemembervalue{#2}}
+  & \xauat@committeecell{7.01cm}{\xauat@committeemembervalue{#3}}\\%
+}
+
+\ExplSyntaxOn
+\tl_new:N \l_xauat_committee_member_rows_tl
+\int_new:N \l_xauat_committee_member_row_count_int
+\cs_new_protected:Npn \xauat_committee_cline_if_not_last:nn #1#2
+  {
+    \int_compare:nNnT {#1} < {#2}
+      { \tl_put_right:Nn \l_xauat_committee_member_rows_tl { \cline { 2-4 } } }
+  }
+\cs_new_protected:Npn \xauat_committee_append_member_row:nnn #1#2#3
+  {
+    \tl_put_right:Nn \l_xauat_committee_member_rows_tl
+      {
+        & \xauat@committeecell {2.87cm} { \xauat@committeemembervalue {#1} }
+        & \xauat@committeecell {2.71cm} { \xauat@committeemembervalue {#2} }
+        & \xauat@committeecell {7.01cm} { \xauat@committeemembervalue {#3} } \\
+      }
+  }
+\cs_new_protected:Npn \xauat_committee_append_member_item:n #1
+  { \xauat_committee_append_member_row:nnn #1 }
+\cs_new_protected:Npn \xauat_committee_prepare_legacy_member_rows:
+  {
+    \int_set:Nn \l_xauat_committee_member_row_count_int { 6 }
+    \xauat_committee_append_member_row:nnn
+      { \xauatCommitteeMemberIName }
+      { \xauatCommitteeMemberITitle }
+      { \xauatCommitteeMemberIAffiliation }
+    \xauat_committee_cline_if_not_last:nn { 1 } { 6 }
+    \xauat_committee_append_member_row:nnn
+      { \xauatCommitteeMemberIIName }
+      { \xauatCommitteeMemberIITitle }
+      { \xauatCommitteeMemberIIAffiliation }
+    \xauat_committee_cline_if_not_last:nn { 2 } { 6 }
+    \xauat_committee_append_member_row:nnn
+      { \xauatCommitteeMemberIIIName }
+      { \xauatCommitteeMemberIIITitle }
+      { \xauatCommitteeMemberIIIAffiliation }
+    \xauat_committee_cline_if_not_last:nn { 3 } { 6 }
+    \xauat_committee_append_member_row:nnn
+      { \xauatCommitteeMemberIVName }
+      { \xauatCommitteeMemberIVTitle }
+      { \xauatCommitteeMemberIVAffiliation }
+    \xauat_committee_cline_if_not_last:nn { 4 } { 6 }
+    \xauat_committee_append_member_row:nnn
+      { \xauatCommitteeMemberVName }
+      { \xauatCommitteeMemberVTitle }
+      { \xauatCommitteeMemberVAffiliation }
+    \xauat_committee_cline_if_not_last:nn { 5 } { 6 }
+    \xauat_committee_append_member_row:nnn
+      { \xauatCommitteeMemberVIName }
+      { \xauatCommitteeMemberVITitle }
+      { \xauatCommitteeMemberVIAffiliation }
+  }
+\cs_new_protected:Npn \xauat_committee_prepare_member_rows_from_list:
+  {
+    \int_set:Nn \l_tmpa_int { \seq_count:N \g_xauat_committee_members_seq }
+    \int_set:Nn \l_tmpb_int { \int_max:nn { 6 } { \l_tmpa_int } }
+    \int_set_eq:NN \l_xauat_committee_member_row_count_int \l_tmpb_int
+    \seq_map_indexed_inline:Nn \g_xauat_committee_members_seq
+      {
+        \xauat_committee_append_member_item:n {##2}
+        \xauat_committee_cline_if_not_last:nn {##1} { \l_tmpb_int }
+      }
+    \int_compare:nNnT { \l_tmpa_int } < { 6 }
+      {
+        \int_step_inline:nnn
+          { \int_eval:n { \l_tmpa_int + 1 } }
+          { \l_tmpb_int }
+          {
+            \xauat_committee_append_member_row:nnn {} {} {}
+            \xauat_committee_cline_if_not_last:nn {##1} { \l_tmpb_int }
+          }
+      }
+  }
+\cs_new_protected:Npn \xauat_committee_prepare_member_rows:
+  {
+    \tl_clear:N \l_xauat_committee_member_rows_tl
+    \seq_if_empty:NTF \g_xauat_committee_members_seq
+      { \xauat_committee_prepare_legacy_member_rows: }
+      { \xauat_committee_prepare_member_rows_from_list: }
+  }
+\cs_new:Npn \xauatCommitteePreparedMemberRowCount
+  { \int_use:N \l_xauat_committee_member_row_count_int }
+\cs_new:Npn \xauatCommitteePreparedMemberRows
+  { \tl_use:N \l_xauat_committee_member_rows_tl }
+\cs_new_protected:Npn \xauatPrepareCommitteeMemberRows
+  { \xauat_committee_prepare_member_rows: }
+\tl_new:N \l_xauat_committee_table_tl
+\cs_new_protected:Npn \xauat_typeset_committee_table:
+  {
+    \tl_clear:N \l_xauat_committee_table_tl
+    \tl_put_right:Nn \l_xauat_committee_table_tl
+      {
+        \begin{tblr}{
+          width=15.95cm,
+          colspec={
+            |Q[c,m,wd=3.28cm]
+            |Q[c,m,wd=2.87cm]
+            |Q[c,m,wd=2.71cm]
+            |Q[c,m,wd=7.01cm]|
+          },
+          rows={ht=1.3cm,valign=m},
+          columns={halign=c},
+          rowsep=0pt,
+          colsep=0pt,
+          hspan=minimal,
+          vspan=even,
+          stretch=0
+        }
+          \hline
+          \xauat@committeecell{3.28cm}{答辩人姓名}
+            & \SetCell[c=3]{c} \xauat@committeespancell{\xauat@committeeauthorvalue} & &\\
+          \hline
+          \xauat@committeecell{3.28cm}{答辩时间}
+            & \SetCell[c=3]{c} \xauat@committeespancell{\xauat@committeedatevalue} & &\\
+          \hline
+          \xauat@committeecell{3.28cm}{答辩委员会}
+            & \xauat@committeecell{2.87cm}{姓名}
+            & \xauat@committeecell{2.71cm}{职称}
+            & \xauat@committeecell{7.01cm}{工作单位}\\
+          \hline
+          \xauat@committeecell{3.28cm}{主席}
+            & \xauat@committeecell{2.87cm}{\xauat@committeechairname}
+            & \xauat@committeecell{2.71cm}{\xauat@committeechairtitle}
+            & \xauat@committeecell{7.01cm}{\xauat@committeechairaffiliation}\\
+          \hline
+          \SetCell[r=\xauatCommitteePreparedMemberRowCount]{c,m}
+            \xauat@committeemultirowcell{委员}
+      }
+    \tl_put_right:NV \l_xauat_committee_table_tl \l_xauat_committee_member_rows_tl
+    \tl_put_right:Nn \l_xauat_committee_table_tl
+      {
+          \hline
+        \end{tblr}
+      }
+    \tl_use:N \l_xauat_committee_table_tl
+  }
+\ExplSyntaxOff
+
+\newcommand{\xauat@committeetable}{%
+  \renewcommand{\arraystretch}{1}%
+  \setlength{\tabcolsep}{0pt}%
+  \xauatPrepareCommitteeMemberRows
+  \begingroup
+  \hfuzz=20pt
+  \makebox[0pt][c]{%
+    {\xauat@committeefont
+    \csname xauat_typeset_committee_table:\endcsname}%
+  }%
+  \endgroup
+}
+
+\newcommand{\xauat@makecommittee@normal}{%
+  \xauatcleardoublepage
+  \phantomsection
+  \markboth{\xauat@committeetitle}{\xauat@committeetitle}%
+  \thispagestyle{xauat@plain}%
+  \begin{center}
+    \vspace*{\xauat@reviewPageTitleTopSkip}
+    \xauat@reviewpagetitlecn{\xauat@committeetitle}
+    \vspace{\xauat@reviewPageTitlePaperGap}
+    \xauat@reviewpagepapertitlecn
+    \vspace{\baselineskip}
+    {\heiti\zihao{-4}\linespread{1}\selectfont（涉密论文以下不填）\par}
+    \vspace{\baselineskip}
+    \xauat@committeetable
+  \end{center}
+}
+
+\NewDocumentCommand \makecommitteepage { O{} } {%
+  \xauatifblind
+    {}
+    {%
+      \xauatifconfidential
+        {}
+        {%
+          \xauat@makeorinclude
+            {#1}
+            {\xauat@committeetitle}
+            {\xauat@makecommittee@normal}
+        }%
+    }%
+}
+
+\newcommand{\xauat@copyrighttextfont}{%
+  \songti\zihao{-4}\setlength{\baselineskip}{1cm}\selectfont
+}
+\newcommand{\xauat@copyrighttitlefont}{%
+  \heiti\zihao{-2}\setlength{\baselineskip}{1cm}\selectfont
+}
+\newcommand{\xauat@copyrightsignaturefont}{%
+  \songti\zihao{-4}\setlength{\baselineskip}{1cm}\selectfont
+}
+\newlength{\xauat@copyrightTitleTopSkip}
+\setlength{\xauat@copyrightTitleTopSkip}{-19.8pt}
+\newlength{\xauat@copyrightTitleTextGap}
+\setlength{\xauat@copyrightTitleTextGap}{-2.2pt}
+\newlength{\xauat@copyrightSignatureTitleGap}
+\setlength{\xauat@copyrightSignatureTitleGap}{1.076cm}
+\newlength{\xauat@copyrightTextSignatureGap}
+\setlength{\xauat@copyrightTextSignatureGap}{0.65cm}
+\newlength{\xauat@copyrightSignatureLineGap}
+\setlength{\xauat@copyrightSignatureLineGap}{0.65cm}
+\newcommand{\xauat@copyrightsection}[2]{%
+  {\centering\xauat@copyrighttitlefont #1\par}%
+  \vspace{\xauat@copyrightTitleTextGap}%
+  {\xauat@copyrighttextfont
+    \setlength{\parindent}{2\ccwd}%
+    \setlength{\parskip}{0pt}%
+    \noindent\hspace*{2\ccwd}#2\par}%
+}
+\newcommand{\xauat@copyrightsignature}[1]{%
+  \par
+  \noindent{\xauat@copyrightsignaturefont
+    \hspace*{2\ccwd}#1\hspace{8em}\xauatSignatureDateLabel\hspace{2.5em}年
+    \hspace{2em}月\hspace{2em}日\par}%
+}
+\newcommand{\xauat@makecopyright@normal}{%
+  \xauatcleardoublepage
+  \phantomsection
+  \markboth{声明}{声明}%
+  \thispagestyle{xauat@plain}%
+  \begingroup
+  \setlength{\parindent}{2\ccwd}%
+  \vspace*{\xauat@copyrightTitleTopSkip}%
+  \xauat@copyrightsection
+    {\xauatOriginalityDeclarationTitle}
+    {\xauatOriginalityDeclarationText\par\xauatOriginalityResponsibilityText}%
+  \vspace{\xauat@copyrightTextSignatureGap}%
+  \xauat@copyrightsignature{\xauatAuthorSignatureLabel}%
+  \vspace{\xauat@copyrightSignatureTitleGap}%
+  \xauat@copyrightsection
+    {\xauatIntellectualPropertyDeclarationTitle}
+    {\xauatIntellectualPropertyDeclarationTextA\par\xauatIntellectualPropertyDeclarationTextB}%
+  \vspace{\xauat@copyrightTextSignatureGap}%
+  \xauat@copyrightsignature{\xauatAuthorSignatureLabel}%
+  \vspace{\xauat@copyrightSignatureLineGap}%
+  \xauat@copyrightsignature{\xauatSupervisorSignatureLabel}%
+  \endgroup
+}
+
+\NewDocumentCommand \makecopyrightpage { O{} } {%
+  \xauatifblind
+    {}
+    {%
+      \xauat@makeorincludeautoscan
+        {#1}
+        {声明}
+        {assets/scan/scan-copyright.pdf}
+        {\xauat@makecopyright@normal}%
+    }%
+}
+\let\copyrightpage\makecopyrightpage
+\let\declarationpage\makecopyrightpage
+\let\makedeclaration\makecopyrightpage
+
+\newcommand{\xauat@makeabstractcn}{%
+  \xauatunnumberedchapter{\xauatAbstractNameCN}
+  \begin{center}
+    {\heiti\zihao{3}\xauatTitleCN\par}
+    \vspace{0.6em}
+    \begin{tabular}{>{\heiti}r@{\quad}l}
+      学位类型 & \xauatDegreeTypeCN\\
+      \xauatMajorLabelCN & \xauatMajorValueCN\\
+    \end{tabular}
+  \end{center}
+  \vspace{1em}
+  \xauat@abstractcn
+
+  \vspace{1em}
+  \noindent{\heiti\xauatKeywordNameCN}\xauatKeywordsCN
+
+  \vspace{0.5em}
+  \noindent{\heiti\xauatThesisTypeNameCN}\xauatThesisTypeCN
+}
+
+\newcommand{\xauat@makeabstracten}{%
+  \xauatunnumberedchapter{\xauatAbstractNameEN}
+  \begin{center}
+    {\bfseries\zihao{3}\xauatTitleEN\par}
+    \vspace{0.6em}
+    \begin{tabular}{>{\bfseries}r@{\quad}l}
+      Type of Degree & \xauatDegreeTypeEN\\
+      \xauatMajorLabelEN & \xauatMajorValueEN\\
+    \end{tabular}
+  \end{center}
+  \vspace{1em}
+  \xauat@abstracten
+
+  \vspace{1em}
+  \noindent{\bfseries\xauatKeywordNameEN}\quad\xauatKeywordsEN
+
+  \vspace{0.5em}
+  \noindent{\bfseries\xauatThesisTypeNameEN}\quad\xauatThesisTypeEN
+}
+
+\renewcommand\contentsname{\xauatContentsName}
+
+\NewDocumentCommand \makecover { } {%
+  \xauatcleardoublepage
+  \@mainmatterfalse
+  \pagenumbering{gobble}%
+  \pagestyle{xauat@empty}%
+  \xauat@maketitlecn
+  \xauatcleardoublepage
+  \xauat@maketitleen
+  \clearpage
+}
+\renewcommand\maketitle{\makecover}
+
+\newcommand{\makefrontmatter}{%
+  \makecover
+  \makeadvisorteampage
+  \makecommitteepage
+  \makecopyrightpage
+  \frontmatter
+  \xauat@makeabstractcn
+  \xauat@makeabstracten
+  \xauatmaketableofcontents
+  \xauatcleardoublepage
+}
+
+\newcommand{\makechineseinnercover}{%
+  \xauatcleardoublepage
+  \@mainmatterfalse
+  \pagenumbering{gobble}%
+  \pagestyle{xauat@empty}%
+  \xauat@maketitlecn
+  \clearpage
+}
+
+\makeatother
+
+\endinput

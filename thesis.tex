@@ -1,0 +1,39 @@
+\documentclass[
+  degree=doctor,
+  degree-type=academic,
+  media=electronic,
+  review=normal,
+  advisor-mode=team,
+  discipline-type=science
+]{xauatthesis}
+
+\input{metadata}
+\XAUATaddbibresource{ref/refs.bib}
+
+\begin{document}
+% 前置复杂页各自独立，便于单独替换扫描件或调整版式。
+\makecover
+\makeadvisorteampage
+\makecommitteepage
+\makecopyrightpage
+
+% 摘要、目录和符号表阶段。
+\frontmatter
+\input{data/abstract-cn}
+\input{data/abstract-en}
+\tableofcontents
+\input{data/denotation}
+
+% 正文阶段。
+\mainmatter
+\input{data/chap01}
+\input{data/chap02}
+\printXAUATbibliography
+\input{data/acknowledgements}
+
+% 附录和后置材料。
+\appendix
+\input{data/appendix}
+\backmatter
+\input{data/resume}
+\end{document}

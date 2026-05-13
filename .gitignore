@@ -1,0 +1,37 @@
+# LaTeX build directories
+/build*/
+/examples/**/build*/
+/tests/**/build*/
+
+# Root build products
+/thesis.aux
+/thesis.bbl
+/thesis.bcf
+/thesis.blg
+/thesis.fdb_latexmk
+/thesis.fls
+/thesis.log
+/thesis.pdf
+/thesis.run.xml
+/thesis.synctex.gz
+/thesis.toc
+/thesis.xdv
+
+# Common LaTeX intermediates
+*.aux
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.run.xml
+*.synctex.gz
+*.toc
+*.xdv
+
+# Editor and OS files
+.DS_Store
+Thumbs.db
+*.swp
+*.tmp

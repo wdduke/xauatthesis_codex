@@ -1,0 +1,43 @@
+\chapter{绪论}
+
+这里是正文示例。第一阶段的目标是保证模板骨架稳定可编译，并让主要选项能够影响输出结果。
+
+\section{研究背景}
+
+学位论文模板需要把重复性的格式规则封装起来，使作者能够把主要精力放在论文内容本身。排版系统的经典实现可以追溯到 \LaTeX{} 的早期设计\cite{lamport1994latex}。
+
+\subsection{国内外研究现状}
+
+本节用于检查三级标题、正文缩进、行距和页眉页脚是否正常。第二阶段开始补充图、表、公式、脚注和参考文献等真实写作场景。\footnote{脚注样式将在后续任务中继续按照学校规范精调。}
+
+\section{本文工作}
+
+本文当前阶段完成电子版、打印版、常规版和盲审版四类输出入口。
+
+\begin{figure}[htbp]
+  \centering
+  \fbox{\rule{0pt}{3cm}\rule{0.72\textwidth}{0pt}}
+  \caption{模板正文图题格式示例}
+  \label{fig:body-example}
+\end{figure}
+
+\begin{table}[htbp]
+  \centering
+  \caption{第二阶段写作功能示例}
+  \label{tab:phase-two}
+  \begin{tabular}{lll}
+    \toprule
+    功能 & 当前状态 & 验证方式\\
+    \midrule
+    图题 & 已接入 & 见图 \ref{fig:body-example}\\
+    表题 & 已接入 & 见表 \ref{tab:phase-two}\\
+    公式 & 已接入 & 见式 \eqref{eq:sample-energy}\\
+    \bottomrule
+  \end{tabular}
+  \xauattablenote{本表用于检查三线表、表题位置和表注命令。}
+\end{table}
+
+\begin{equation}
+  E = mc^2
+  \label{eq:sample-energy}
+\end{equation}

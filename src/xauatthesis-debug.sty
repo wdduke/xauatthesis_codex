@@ -1,0 +1,63 @@
+\NeedsTeXFormat{LaTeX2e}[2022/06/01]
+\ProvidesFile{xauatthesis-debug.sty}
+  [2026/05/08 v0.1 Hidden layout debug helpers for XAUAT thesis template]
+
+\makeatletter
+
+\newif\ifxauat@debug@showframe
+\newif\ifxauat@debug@grid
+\newif\ifxauat@debug@layoutpage
+\newif\ifxauat@debug@logobox
+\newif\ifxauat@debug@covertablebox
+
+\newcommand{\xauatdebugshowframe}{\xauat@debug@showframetrue}
+\newcommand{\xauatdebuggrid}{\xauat@debug@gridtrue}
+\newcommand{\xauatdebuglayoutpage}{\xauat@debug@layoutpagetrue}
+\newcommand{\xauatdebuglogobox}{\xauat@debug@logoboxtrue}
+\newcommand{\xauatdebugcovertablebox}{\xauat@debug@covertableboxtrue}
+\newcommand{\xauatdebugall}{%
+  \xauat@debug@showframetrue
+  \xauat@debug@gridtrue
+  \xauat@debug@logoboxtrue
+  \xauat@debug@covertableboxtrue
+}
+
+\InputIfFileExists{xauatthesis-debug.cfg}
+  { \typeout{XAUAT debug: loaded xauatthesis-debug.cfg.} }
+  { \typeout{XAUAT debug: no local debug config found.} }
+
+\ifxauat@debug@showframe
+  \typeout{XAUAT debug: showframe enabled.}
+  \RequirePackage{showframe}
+\fi
+
+\ifxauat@debug@layoutpage
+  \typeout{XAUAT debug: layout package enabled.}
+  \RequirePackage{layout}
+\fi
+
+\ifxauat@debug@grid
+  \typeout{XAUAT debug: 1 cm page grid enabled.}
+  \AddToShipoutPictureBG{%
+    \AtPageLowerLeft{%
+      \begingroup
+      \color{black!18}%
+      \linethickness{0.1pt}%
+      \multiput(0,0)(28.45274,0){22}{\line(0,1){845}}%
+      \multiput(0,0)(0,28.45274){31}{\line(1,0){598}}%
+      \endgroup
+    }%
+  }%
+\fi
+
+\ifxauat@debug@logobox
+  \typeout{XAUAT debug: Chinese cover logo boundary enabled.}
+\fi
+
+\ifxauat@debug@covertablebox
+  \typeout{XAUAT debug: Chinese cover information table boundary enabled.}
+\fi
+
+\makeatother
+
+\endinput
