@@ -39,11 +39,14 @@
 \newcommand{\xauat@abstract@meta@label@font@en}{%
   \bfseries
 }
+\newcommand{\xauat@abstract@meta@multiline@font@en}{%
+  \rmfamily\zihao{-4}\setlength{\baselineskip}{18bp}\selectfont
+}
 \newcommand{\xauat@abstract@heading@font@cn}{%
   \rmfamily\heiti\zihao{3}\linespread{1}\selectfont
 }
 \newcommand{\xauat@abstract@heading@font@en}{%
-  \bfseries\zihao{3}\linespread{1}\selectfont
+  \bfseries\zihao{-2}\linespread{1}\selectfont
 }
 \newcommand{\xauat@abstract@body@font@cn}{%
   \rmfamily\songti\zihao{-4}\setlength{\baselineskip}{1cm}\selectfont
@@ -82,6 +85,26 @@
 \setlength{\xauat@abstract@cn@typeFundingGap}{0.5cm}
 \newlength{\xauat@abstract@cn@metaColumnGap}
 \setlength{\xauat@abstract@cn@metaColumnGap}{1em}
+\newlength{\xauat@abstract@en@titleTopSkip}
+\setlength{\xauat@abstract@en@titleTopSkip}{-0.3cm}
+\newlength{\xauat@abstract@en@titleMetaGap}
+\setlength{\xauat@abstract@en@titleMetaGap}{0.25cm}
+\newlength{\xauat@abstract@en@metaHeadingGap}
+\setlength{\xauat@abstract@en@metaHeadingGap}{0.8cm}
+\newlength{\xauat@abstract@en@headingBodyGap}
+\setlength{\xauat@abstract@en@headingBodyGap}{0.45cm}
+\newlength{\xauat@abstract@en@bodyKeywordsGap}
+\setlength{\xauat@abstract@en@bodyKeywordsGap}{0.45cm}
+\newlength{\xauat@abstract@en@keywordsTypeGap}
+\setlength{\xauat@abstract@en@keywordsTypeGap}{0.45cm}
+\newlength{\xauat@abstract@en@typeFundingGap}
+\setlength{\xauat@abstract@en@typeFundingGap}{0.25cm}
+\newlength{\xauat@abstract@en@metaColumnGap}
+\setlength{\xauat@abstract@en@metaColumnGap}{1em}
+\newlength{\xauat@abstract@en@metaRowGap}
+\setlength{\xauat@abstract@en@metaRowGap}{0.12cm}
+\newlength{\xauat@abstract@en@metaValueWidth}
+\setlength{\xauat@abstract@en@metaValueWidth}{7.2cm}
 \newcommand{\xauat@abstract@title@cn}{%
   {\centering\xauat@abstract@paper@title@font@cn
     \xauatTitleCN\par}%
@@ -89,7 +112,6 @@
 \newcommand{\xauat@abstract@title@en}{%
   {\centering\xauat@abstract@paper@title@font@en
     \xauatTitleEN\par}%
-  \vspace{0.5\baselineskip}%
 }
 \newcommand{\xauat@abstract@meta@cn}{%
   {%
@@ -107,21 +129,29 @@
   }%
 }
 \newcommand{\xauat@abstract@meta@en}{%
-  \begin{center}
+  {%
     \xauat@abstract@meta@font@en
-    \begin{tabular}{>{\xauat@abstract@meta@label@font@en}r@{\quad}l}
-      Type of Degree & \xauatDegreeTypeEN\\
-      \xauatMajorLabelEN & \xauatMajorValueEN\\
-    \end{tabular}
-  \end{center}
+    \noindent\makebox[\textwidth][c]{%
+      \makebox[0pt][r]{\xauat@abstract@meta@label@font@en Type of Degree:}%
+      \hspace{\xauat@abstract@en@metaColumnGap}%
+      \makebox[0pt][l]{\xauatDegreeTypeEN}%
+    }\par
+    \vspace{\xauat@abstract@en@metaRowGap}%
+    \noindent\makebox[\textwidth][c]{%
+      \makebox[0pt][r]{\xauat@abstract@meta@label@font@en Specialty:}%
+      \hspace{\xauat@abstract@en@metaColumnGap}%
+      \makebox[0pt][l]{%
+        \parbox[c]{\xauat@abstract@en@metaValueWidth}{%
+          \raggedright\xauat@abstract@meta@multiline@font@en\xauatMajorValueEN}%
+      }%
+    }\par
+  }%
 }
 \newcommand{\xauat@abstract@heading@cn}{%
   {\centering\xauat@abstract@heading@font@cn 摘\hspace{0.5cm}要\par}%
 }
 \newcommand{\xauat@abstract@heading@en}{%
-  \vspace{\baselineskip}%
   {\centering\xauat@abstract@heading@font@en\xauatAbstractNameEN\par}%
-  \vspace{0.5\baselineskip}%
 }
 \newcommand{\xauat@abstract@body@cn}[1]{%
   {\xauat@abstract@body@font@cn
@@ -136,7 +166,6 @@
   {\xauat@abstract@value@font@cn\xauatKeywordsCN\par}%
 }
 \newcommand{\xauat@abstract@keywords@en}{%
-  \vspace{\baselineskip}%
   {\noindent\xauat@abstract@label@font@en\xauatKeywordNameEN\quad}%
   {\xauat@abstract@value@font@en\xauatKeywordsEN\par}%
 }
@@ -155,9 +184,18 @@
   \endgroup
 }
 \newcommand{\xauat@abstract@type@en}{%
-  \vspace{\baselineskip}%
   {\noindent\xauat@abstract@label@font@en\xauatThesisTypeNameEN\quad}%
   {\xauat@abstract@value@font@en\xauatThesisTypeEN\par}%
+}
+\newcommand{\xauat@abstract@funding@en}{%
+  \begingroup
+  \edef\xauat@abstract@funding@value{\xauatFundingEN}%
+  \ifx\xauat@abstract@funding@value\@empty
+  \else
+    {\xauat@abstract@body@font@en
+      \setlength{\parindent}{2em}\xauatFundingEN\par}%
+  \fi
+  \endgroup
 }
 
 \newcommand{\xauat@cover@degree@font}{%
@@ -1039,12 +1077,26 @@
 
 \newcommand{\xauat@abstract@assemble@en}[1]{%
   \xauat@abstract@start{\xauatAbstractNameEN}%
+  \vspace*{\xauat@abstract@en@titleTopSkip}%
   \xauat@abstract@title@en
+  \vspace{\xauat@abstract@en@titleMetaGap}%
   \xauat@abstract@meta@en
+  \vspace{\xauat@abstract@en@metaHeadingGap}%
   \xauat@abstract@heading@en
+  \vspace{\xauat@abstract@en@headingBodyGap}%
   \xauat@abstract@body@en{#1}
+  \vspace{\xauat@abstract@en@bodyKeywordsGap}%
   \xauat@abstract@keywords@en
+  \vspace{\xauat@abstract@en@keywordsTypeGap}%
   \xauat@abstract@type@en
+  \begingroup
+  \edef\xauat@abstract@funding@value{\xauatFundingEN}%
+  \ifx\xauat@abstract@funding@value\@empty
+  \else
+    \vspace{\xauat@abstract@en@typeFundingGap}%
+    \xauat@abstract@funding@en
+  \fi
+  \endgroup
 }
 
 \newcommand{\xauat@makeabstractcn}{%
