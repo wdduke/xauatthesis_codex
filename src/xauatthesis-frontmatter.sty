@@ -21,13 +21,179 @@
     \xauat@makeabstracten
   \fi
 }
+\newcommand{\xauat@abstract@paper@title@font@cn}{%
+  \rmfamily\heiti\zihao{-2}\setlength{\baselineskip}{24bp}\selectfont
+}
+\newcommand{\xauat@abstract@paper@title@font@en}{%
+  \bfseries\zihao{-2}\setlength{\baselineskip}{24bp}\selectfont
+}
+\newcommand{\xauat@abstract@meta@font@cn}{%
+  \rmfamily\kaishu\zihao{-4}\setlength{\baselineskip}{1cm}\selectfont
+}
+\newcommand{\xauat@abstract@meta@label@font@cn}{%
+  \rmfamily\kaishu
+}
+\newcommand{\xauat@abstract@meta@font@en}{%
+  \rmfamily\zihao{-4}\setlength{\baselineskip}{22bp}\selectfont
+}
+\newcommand{\xauat@abstract@meta@label@font@en}{%
+  \bfseries
+}
+\newcommand{\xauat@abstract@heading@font@cn}{%
+  \rmfamily\heiti\zihao{3}\linespread{1}\selectfont
+}
+\newcommand{\xauat@abstract@heading@font@en}{%
+  \bfseries\zihao{3}\linespread{1}\selectfont
+}
+\newcommand{\xauat@abstract@body@font@cn}{%
+  \rmfamily\songti\zihao{-4}\setlength{\baselineskip}{1cm}\selectfont
+}
+\newcommand{\xauat@abstract@body@font@en}{%
+  \rmfamily\zihao{-4}\setlength{\baselineskip}{22bp}\selectfont
+}
+\newcommand{\xauat@abstract@label@font@cn}{%
+  \rmfamily\heiti\zihao{-4}\setlength{\baselineskip}{1cm}\selectfont
+}
+\newcommand{\xauat@abstract@value@font@cn}{%
+  \rmfamily\songti\zihao{-4}\setlength{\baselineskip}{1cm}\selectfont
+}
+\newcommand{\xauat@abstract@type@value@font@cn}{%
+  \rmfamily\songti\zihao{-4}\setlength{\baselineskip}{1cm}\selectfont
+}
+\newcommand{\xauat@abstract@label@font@en}{%
+  \bfseries\zihao{-4}\setlength{\baselineskip}{22bp}\selectfont
+}
+\newcommand{\xauat@abstract@value@font@en}{%
+  \rmfamily\zihao{-4}\setlength{\baselineskip}{22bp}\selectfont
+}
+\newlength{\xauat@abstract@cn@titleTopSkip}
+\setlength{\xauat@abstract@cn@titleTopSkip}{-0.35cm}
+\newlength{\xauat@abstract@cn@titleMetaGap}
+\setlength{\xauat@abstract@cn@titleMetaGap}{\dimexpr 1cm - 24bp\relax}
+\newlength{\xauat@abstract@cn@metaHeadingGap}
+\setlength{\xauat@abstract@cn@metaHeadingGap}{0.55cm}
+\newlength{\xauat@abstract@cn@headingBodyGap}
+\setlength{\xauat@abstract@cn@headingBodyGap}{\dimexpr 1cm - 22bp\relax}
+\newlength{\xauat@abstract@cn@bodyKeywordsGap}
+\setlength{\xauat@abstract@cn@bodyKeywordsGap}{0.5cm}
+\newlength{\xauat@abstract@cn@keywordsTypeGap}
+\setlength{\xauat@abstract@cn@keywordsTypeGap}{\dimexpr 1cm - 22bp\relax}
+\newlength{\xauat@abstract@cn@typeFundingGap}
+\setlength{\xauat@abstract@cn@typeFundingGap}{0.5cm}
+\newlength{\xauat@abstract@cn@metaColumnGap}
+\setlength{\xauat@abstract@cn@metaColumnGap}{1em}
+\newcommand{\xauat@abstract@title@cn}{%
+  {\centering\xauat@abstract@paper@title@font@cn
+    \xauatTitleCN\par}%
+}
+\newcommand{\xauat@abstract@title@en}{%
+  {\centering\xauat@abstract@paper@title@font@en
+    \xauatTitleEN\par}%
+  \vspace{0.5\baselineskip}%
+}
+\newcommand{\xauat@abstract@meta@cn}{%
+  {%
+    \xauat@abstract@meta@font@cn
+    \noindent\makebox[\textwidth][c]{%
+      \makebox[0pt][r]{\xauat@abstract@meta@label@font@cn 学位类型：}%
+      \hspace{\xauat@abstract@cn@metaColumnGap}%
+      \makebox[0pt][l]{\xauatDegreeTypeCN}%
+    }\par
+    \noindent\makebox[\textwidth][c]{%
+      \makebox[0pt][r]{\xauat@abstract@meta@label@font@cn 学科专业：}%
+      \hspace{\xauat@abstract@cn@metaColumnGap}%
+      \makebox[0pt][l]{\xauatMajorValueCN}%
+    }\par
+  }%
+}
+\newcommand{\xauat@abstract@meta@en}{%
+  \begin{center}
+    \xauat@abstract@meta@font@en
+    \begin{tabular}{>{\xauat@abstract@meta@label@font@en}r@{\quad}l}
+      Type of Degree & \xauatDegreeTypeEN\\
+      \xauatMajorLabelEN & \xauatMajorValueEN\\
+    \end{tabular}
+  \end{center}
+}
+\newcommand{\xauat@abstract@heading@cn}{%
+  {\centering\xauat@abstract@heading@font@cn 摘\hspace{0.5cm}要\par}%
+}
+\newcommand{\xauat@abstract@heading@en}{%
+  \vspace{\baselineskip}%
+  {\centering\xauat@abstract@heading@font@en\xauatAbstractNameEN\par}%
+  \vspace{0.5\baselineskip}%
+}
+\newcommand{\xauat@abstract@body@cn}[1]{%
+  {\xauat@abstract@body@font@cn
+    \setlength{\parindent}{2\ccwd}#1\par}%
+}
+\newcommand{\xauat@abstract@body@en}[1]{%
+  {\xauat@abstract@body@font@en
+    \setlength{\parindent}{2em}#1\par}%
+}
+\newcommand{\xauat@abstract@keywords@cn}{%
+  {\noindent\xauat@abstract@label@font@cn\xauatKeywordNameCN}%
+  {\xauat@abstract@value@font@cn\xauatKeywordsCN\par}%
+}
+\newcommand{\xauat@abstract@keywords@en}{%
+  \vspace{\baselineskip}%
+  {\noindent\xauat@abstract@label@font@en\xauatKeywordNameEN\quad}%
+  {\xauat@abstract@value@font@en\xauatKeywordsEN\par}%
+}
+\newcommand{\xauat@abstract@type@cn}{%
+  {\noindent\xauat@abstract@label@font@cn\xauatThesisTypeNameCN}%
+  {\xauat@abstract@type@value@font@cn\xauatThesisTypeCN\par}%
+}
+\newcommand{\xauat@abstract@funding@cn}{%
+  \begingroup
+  \edef\xauat@abstract@funding@value{\xauatFundingCN}%
+  \ifx\xauat@abstract@funding@value\@empty
+  \else
+    {\xauat@abstract@body@font@cn
+      \setlength{\parindent}{2\ccwd}\xauatFundingCN\par}%
+  \fi
+  \endgroup
+}
+\newcommand{\xauat@abstract@type@en}{%
+  \vspace{\baselineskip}%
+  {\noindent\xauat@abstract@label@font@en\xauatThesisTypeNameEN\quad}%
+  {\xauat@abstract@value@font@en\xauatThesisTypeEN\par}%
+}
+
+\newcommand{\xauat@cover@degree@font}{%
+  \songti\bfseries\zihao{-1}\linespread{1}\selectfont
+}
+\newcommand{\xauat@cover@degree@type@font}{%
+  \heiti\zihao{-2}\linespread{1}\selectfont
+}
+\newcommand{\xauat@cover@title@font}{%
+  \rmfamily\xauatcovertitlefont\zihao{3}\setlength{\baselineskip}{24bp}\selectfont
+}
+\newcommand{\xauat@cover@info@label@font}{%
+  \heiti\zihao{4}\selectfont
+}
+\newcommand{\xauat@cover@info@value@font}{%
+  \xauat@heitiroman{4}%
+}
+\newcommand{\xauat@cover@en@title@font}{%
+  \bfseries\zihao{-2}\setlength{\baselineskip}{1cm}\selectfont
+}
+\newcommand{\xauat@cover@en@statement@font}{%
+  \rmfamily\zihao{4}\selectfont
+}
+\newcommand{\xauat@cover@en@author@font}{%
+  \rmfamily\zihao{4}\selectfont
+}
+\newcommand{\xauat@cover@en@discipline@font}{%
+  \rmfamily\zihao{4}\selectfont
+}
 
 \newcommand{\xauat@coverrowstrut}{\rule[-0.375cm]{0pt}{1.25cm}}
 \newcommand{\xauat@coverlabelcn}[1]{%
-  \makebox[3.43cm][r]{\heiti\zihao{4}\makebox[4\ccwd][s]{#1}：}%
+  \makebox[3.43cm][r]{\xauat@cover@info@label@font\makebox[4\ccwd][s]{#1}：}%
 }
 \newcommand{\xauat@covervaluecn}[1]{%
-  \underline{\makebox[8.88cm][c]{\xauat@heitiroman{4}#1}}%
+  \underline{\makebox[8.88cm][c]{\xauat@cover@info@value@font #1}}%
 }
 \newcommand{\xauat@coverrowcn}[2]{%
   \xauat@coverrowstrut\xauat@coverlabelcn{#1} & \xauat@covervaluecn{#2}\\%
@@ -110,7 +276,7 @@
 \newcommand{\xauat@covertitlecn}[1]{%
   \begin{minipage}[t][40bp][t]{\textwidth}
     \centering
-    \rmfamily\xauatcovertitlefont\zihao{3}\setlength{\baselineskip}{24bp}\selectfont
+    \xauat@cover@title@font
     #1\par
   \end{minipage}\par
 }
@@ -128,11 +294,11 @@
 
 \newcommand{\xauat@covertitleen}[1]{%
   \begin{minipage}{0.88\textwidth}
-    \centering\bfseries\zihao{-2}%
-    \setlength{\baselineskip}{1cm}%
+    \centering
+    \xauat@cover@en@title@font
     \setlength{\lineskiplimit}{-100pt}%
     \setlength{\lineskip}{0pt}%
-    \selectfont #1\par
+    #1\par
   \end{minipage}\par
 }
 \newsavebox{\xauat@enTitleBox}
@@ -225,19 +391,19 @@
   }%
   \sbox{\xauat@enStatementBox}{%
     \begin{minipage}{\textwidth}
-      \centering\rmfamily\zihao{4}\selectfont
+      \centering\xauat@cover@en@statement@font
       \xauat@coverstatementen
     \end{minipage}%
   }%
   \sbox{\xauat@enAuthorBox}{%
     \begin{minipage}{\textwidth}
-      \centering\rmfamily\zihao{4}\selectfont
+      \centering\xauat@cover@en@author@font
       \xauat@coverauthoren
     \end{minipage}%
   }%
   \sbox{\xauat@enDisciplineBox}{%
     \begin{minipage}{\textwidth}
-      \centering\rmfamily\zihao{4}\selectfont
+      \centering\xauat@cover@en@discipline@font
       \xauat@coverdisciplineen
     \end{minipage}%
   }%
@@ -273,17 +439,30 @@
   \fi
 }
 
-\newcommand{\xauat@maketitlecn}{%
+\newcommand{\xauat@cover@start}{%
+  \xauatcleardoublepage
+  \@mainmatterfalse
+  \pagenumbering{gobble}%
+  \pagestyle{xauat@empty}%
+}
+\newcommand{\xauat@cover@nextpage}{%
+  \xauatcleardoublepage
+}
+\newcommand{\xauat@cover@end}{%
+  \clearpage
+}
+
+\newcommand{\xauat@cover@cn}{%
   \thispagestyle{xauat@empty}%
   \xauat@placecoverlogocn
   \begin{center}
     % Calibrated on the 1 cm debug grid:
     % logo lower edge -> degree-paper glyph center ~= 1 cm.
     \vspace*{2.17cm}
-    {\songti\bfseries\zihao{-1}\linespread{1}\selectfont\xauatDegreePaperCN\par}
+    {\xauat@cover@degree@font\xauatDegreePaperCN\par}
     % degree-paper glyph center -> degree-type glyph center ~= 1 cm.
     \vspace{4.7pt}
-    {\heiti\zihao{-2}\linespread{1}\selectfont（\xauatDegreeTypeCN）\par}
+    {\xauat@cover@degree@type@font（\xauatDegreeTypeCN）\par}
     \vspace{48.4bp}
     \xauat@covertitlecn{\xauatTitleCN}
     \vspace{52.5bp}
@@ -291,7 +470,7 @@
   \end{center}
 }
 
-\newcommand{\xauat@maketitleen}{%
+\newcommand{\xauat@cover@en}{%
   \thispagestyle{xauat@empty}%
   \xauat@preparecoveren
   \noindent\hbox to \textwidth{%
@@ -325,19 +504,36 @@
 \setlength{\xauat@advisorTitleTableGap}{32.8pt}
 \newlength{\xauat@reviewPaperTitleBoxHeight}
 \setlength{\xauat@reviewPaperTitleBoxHeight}{1.65cm}
-\newcommand{\xauat@reviewtitlefont}{\xauat@heitiroman{-2}\linespread{1}\selectfont}
-\newcommand{\xauat@reviewpagetitlecn}[1]{%
-  {\xauat@reviewtitlefont #1\par}%
+\newcommand{\xauat@fixedfront@page@title@font}{%
+  \heiti\zihao{2}\setlength{\baselineskip}{1cm}\selectfont
 }
-\newcommand{\xauat@reviewpagepapertitlecn}{%
+\newcommand{\xauat@fixedfront@paper@title@font}{%
+  \heiti\zihao{-2}\setlength{\baselineskip}{1cm}\selectfont
+}
+\newcommand{\xauat@fixedfront@table@font}{%
+  \xauat@heitiroman{-4}\linespread{1}\selectfont
+}
+\newcommand{\xauat@fixedfront@confidential@note@font}{%
+  \xauatsongslant\zihao{3}\linespread{1}\selectfont
+}
+\newcommand{\xauat@fixedfront@start}[1]{%
+  \xauatstartfrontpage{#1}%
+}
+\newcommand{\xauat@fixedfront@page@title}[1]{%
+  {\centering\xauat@fixedfront@page@title@font #1\par}%
+}
+\newcommand{\xauat@fixedfront@paper@title}{%
+  \xauatTitleCN
+}
+\newcommand{\xauat@fixedfront@paper@title@box}{%
   {%
     \begin{minipage}[t][\xauat@reviewPaperTitleBoxHeight][t]{0.88\textwidth}
       \centering
-      \xauat@reviewtitlefont
+      \xauat@fixedfront@paper@title@font
       \setlength{\baselineskip}{1cm}%
       \setlength{\lineskiplimit}{-100pt}%
       \setlength{\lineskip}{0pt}%
-      \xauatTitleCN
+      \xauat@fixedfront@paper@title
     \end{minipage}\par}%
 }
 \newcommand{\xauat@teamcell}[2]{%
@@ -423,9 +619,7 @@
     \tl_if_empty:NTF \l_xauat_pdf_page_file_tl
       {#4}
       {
-        \xauatcleardoublepage
-        \phantomsection
-        \markboth{#2}{#2}
+        \xauat@fixedfront@start {#2}
         \includepdf[
           pages=-,
           pagecommand={
@@ -444,13 +638,13 @@
   \csname xauat_make_or_include_pdf_page:nnnn\endcsname{#1}{#2}{#3}{#4}%
 }
 
-\newcommand{\xauat@advisorteamtable}{%
+\newcommand{\xauat@advisorteam@table}{%
   \setlength{\tabcolsep}{0pt}%
   \begingroup
   \hfuzz=30pt
   \hbadness=10000
   \noindent\makebox[\textwidth][c]{%
-    {\xauat@committeefont
+    {\xauat@fixedfront@table@font
     \begin{tblr}{
       colspec = {
         |Q[c,m,wd=3.16cm]
@@ -504,17 +698,14 @@
 }
 
 \newcommand{\xauat@makeadvisorteam@normal}{%
-  \xauatcleardoublepage
-  \phantomsection
-  \markboth{指导教师团队}{指导教师团队}%
-  \thispagestyle{xauat@plain}%
+  \xauat@fixedfront@start{\xauat@advisorteamtitle}%
   \begin{center}
     \vspace*{\xauat@reviewPageTitleTopSkip}
-    \xauat@reviewpagetitlecn{\xauat@advisorteamtitle}
+    \xauat@fixedfront@page@title{\xauat@advisorteamtitle}
     \vspace{\xauat@reviewPageTitlePaperGap}
-    \xauat@reviewpagepapertitlecn
+    \xauat@fixedfront@paper@title@box
     \vspace{\xauat@advisorTitleTableGap}
-    \xauat@advisorteamtable
+    \xauat@advisorteam@table
   \end{center}
 }
 
@@ -535,8 +726,6 @@
 }
 
 \newcommand{\xauat@committeetitle}{\xauatDegreeNameCN 学位论文答辩委员会}
-\newcommand{\xauat@reviewtablefont}{\xauat@heitiroman{-4}\linespread{1}\selectfont}
-\newcommand{\xauat@committeefont}{\xauat@reviewtablefont}
 \newcommand{\xauat@committeecell}[2]{%
   \parbox[c][1.3cm][c]{#1}{\centering #2}%
 }
@@ -706,33 +895,34 @@
   }
 \ExplSyntaxOff
 
-\newcommand{\xauat@committeetable}{%
+\newcommand{\xauat@committee@table}{%
   \renewcommand{\arraystretch}{1}%
   \setlength{\tabcolsep}{0pt}%
   \xauatPrepareCommitteeMemberRows
   \begingroup
   \hfuzz=20pt
   \makebox[0pt][c]{%
-    {\xauat@committeefont
+    {\xauat@fixedfront@table@font
     \csname xauat_typeset_committee_table:\endcsname}%
   }%
   \endgroup
 }
 
+\newcommand{\xauat@committee@confidential@note}{%
+  {\xauat@fixedfront@confidential@note@font（涉密论文以下不填）\par}%
+}
+
 \newcommand{\xauat@makecommittee@normal}{%
-  \xauatcleardoublepage
-  \phantomsection
-  \markboth{\xauat@committeetitle}{\xauat@committeetitle}%
-  \thispagestyle{xauat@plain}%
+  \xauat@fixedfront@start{\xauat@committeetitle}%
   \begin{center}
     \vspace*{\xauat@reviewPageTitleTopSkip}
-    \xauat@reviewpagetitlecn{\xauat@committeetitle}
+    \xauat@fixedfront@page@title{\xauat@committeetitle}
     \vspace{\xauat@reviewPageTitlePaperGap}
-    \xauat@reviewpagepapertitlecn
+    \xauat@fixedfront@paper@title@box
     \vspace{\baselineskip}
-    {\heiti\zihao{-4}\linespread{1}\selectfont（涉密论文以下不填）\par}
+    \xauat@committee@confidential@note
     \vspace{\baselineskip}
-    \xauat@committeetable
+    \xauat@committee@table
   \end{center}
 }
 
@@ -751,13 +941,13 @@
     }%
 }
 
-\newcommand{\xauat@copyrighttextfont}{%
+\newcommand{\xauat@declaration@text@font}{%
   \songti\zihao{-4}\setlength{\baselineskip}{1cm}\selectfont
 }
-\newcommand{\xauat@copyrighttitlefont}{%
+\newcommand{\xauat@declaration@section@title@font}{%
   \heiti\zihao{-2}\setlength{\baselineskip}{1cm}\selectfont
 }
-\newcommand{\xauat@copyrightsignaturefont}{%
+\newcommand{\xauat@declaration@signature@font}{%
   \songti\zihao{-4}\setlength{\baselineskip}{1cm}\selectfont
 }
 \newlength{\xauat@copyrightTitleTopSkip}
@@ -770,41 +960,41 @@
 \setlength{\xauat@copyrightTextSignatureGap}{0.65cm}
 \newlength{\xauat@copyrightSignatureLineGap}
 \setlength{\xauat@copyrightSignatureLineGap}{0.65cm}
-\newcommand{\xauat@copyrightsection}[2]{%
-  {\centering\xauat@copyrighttitlefont #1\par}%
+\newcommand{\xauat@declaration@section}[2]{%
+  {\centering\xauat@declaration@section@title@font #1\par}%
   \vspace{\xauat@copyrightTitleTextGap}%
-  {\xauat@copyrighttextfont
+  {\xauat@declaration@text@font
     \setlength{\parindent}{2\ccwd}%
     \setlength{\parskip}{0pt}%
     \noindent\hspace*{2\ccwd}#2\par}%
 }
-\newcommand{\xauat@copyrightsignature}[1]{%
+\newcommand{\xauat@declaration@signature}[1]{%
   \par
-  \noindent{\xauat@copyrightsignaturefont
+  \noindent{\xauat@declaration@signature@font
     \hspace*{2\ccwd}#1\hspace{8em}\xauatSignatureDateLabel\hspace{2.5em}年
     \hspace{2em}月\hspace{2em}日\par}%
 }
+\newcommand{\xauat@declaration@start}{%
+  \xauat@fixedfront@start{声明}%
+}
 \newcommand{\xauat@makecopyright@normal}{%
-  \xauatcleardoublepage
-  \phantomsection
-  \markboth{声明}{声明}%
-  \thispagestyle{xauat@plain}%
+  \xauat@declaration@start
   \begingroup
   \setlength{\parindent}{2\ccwd}%
   \vspace*{\xauat@copyrightTitleTopSkip}%
-  \xauat@copyrightsection
+  \xauat@declaration@section
     {\xauatOriginalityDeclarationTitle}
     {\xauatOriginalityDeclarationText\par\xauatOriginalityResponsibilityText}%
   \vspace{\xauat@copyrightTextSignatureGap}%
-  \xauat@copyrightsignature{\xauatAuthorSignatureLabel}%
+  \xauat@declaration@signature{\xauatAuthorSignatureLabel}%
   \vspace{\xauat@copyrightSignatureTitleGap}%
-  \xauat@copyrightsection
+  \xauat@declaration@section
     {\xauatIntellectualPropertyDeclarationTitle}
     {\xauatIntellectualPropertyDeclarationTextA\par\xauatIntellectualPropertyDeclarationTextB}%
   \vspace{\xauat@copyrightTextSignatureGap}%
-  \xauat@copyrightsignature{\xauatAuthorSignatureLabel}%
+  \xauat@declaration@signature{\xauatAuthorSignatureLabel}%
   \vspace{\xauat@copyrightSignatureLineGap}%
-  \xauat@copyrightsignature{\xauatSupervisorSignatureLabel}%
+  \xauat@declaration@signature{\xauatSupervisorSignatureLabel}%
   \endgroup
 }
 
@@ -823,57 +1013,56 @@
 \let\declarationpage\makecopyrightpage
 \let\makedeclaration\makecopyrightpage
 
+\newcommand{\xauat@abstract@assemble@cn}[1]{%
+  \xauat@abstract@start{\xauatAbstractNameCN}%
+  \vspace*{\xauat@abstract@cn@titleTopSkip}%
+  \xauat@abstract@title@cn
+  \vspace{\xauat@abstract@cn@titleMetaGap}%
+  \xauat@abstract@meta@cn
+  \vspace{\xauat@abstract@cn@metaHeadingGap}%
+  \xauat@abstract@heading@cn
+  \vspace{\xauat@abstract@cn@headingBodyGap}%
+  \xauat@abstract@body@cn{#1}
+  \vspace{\xauat@abstract@cn@bodyKeywordsGap}%
+  \xauat@abstract@keywords@cn
+  \vspace{\xauat@abstract@cn@keywordsTypeGap}%
+  \xauat@abstract@type@cn
+  \begingroup
+  \edef\xauat@abstract@funding@value{\xauatFundingCN}%
+  \ifx\xauat@abstract@funding@value\@empty
+  \else
+    \vspace{\xauat@abstract@cn@typeFundingGap}%
+    \xauat@abstract@funding@cn
+  \fi
+  \endgroup
+}
+
+\newcommand{\xauat@abstract@assemble@en}[1]{%
+  \xauat@abstract@start{\xauatAbstractNameEN}%
+  \xauat@abstract@title@en
+  \xauat@abstract@meta@en
+  \xauat@abstract@heading@en
+  \xauat@abstract@body@en{#1}
+  \xauat@abstract@keywords@en
+  \xauat@abstract@type@en
+}
+
 \newcommand{\xauat@makeabstractcn}{%
-  \xauatunnumberedchapter{\xauatAbstractNameCN}
-  \begin{center}
-    {\heiti\zihao{3}\xauatTitleCN\par}
-    \vspace{0.6em}
-    \begin{tabular}{>{\heiti}r@{\quad}l}
-      学位类型 & \xauatDegreeTypeCN\\
-      \xauatMajorLabelCN & \xauatMajorValueCN\\
-    \end{tabular}
-  \end{center}
-  \vspace{1em}
-  \xauat@abstractcn
-
-  \vspace{1em}
-  \noindent{\heiti\xauatKeywordNameCN}\xauatKeywordsCN
-
-  \vspace{0.5em}
-  \noindent{\heiti\xauatThesisTypeNameCN}\xauatThesisTypeCN
+  \xauat@abstract@assemble@cn{\xauat@abstractcn}%
 }
 
 \newcommand{\xauat@makeabstracten}{%
-  \xauatunnumberedchapter{\xauatAbstractNameEN}
-  \begin{center}
-    {\bfseries\zihao{3}\xauatTitleEN\par}
-    \vspace{0.6em}
-    \begin{tabular}{>{\bfseries}r@{\quad}l}
-      Type of Degree & \xauatDegreeTypeEN\\
-      \xauatMajorLabelEN & \xauatMajorValueEN\\
-    \end{tabular}
-  \end{center}
-  \vspace{1em}
-  \xauat@abstracten
-
-  \vspace{1em}
-  \noindent{\bfseries\xauatKeywordNameEN}\quad\xauatKeywordsEN
-
-  \vspace{0.5em}
-  \noindent{\bfseries\xauatThesisTypeNameEN}\quad\xauatThesisTypeEN
+  \xauat@abstract@assemble@en{\xauat@abstracten}%
 }
 
 \renewcommand\contentsname{\xauatContentsName}
 
 \NewDocumentCommand \makecover { } {%
-  \xauatcleardoublepage
-  \@mainmatterfalse
-  \pagenumbering{gobble}%
-  \pagestyle{xauat@empty}%
-  \xauat@maketitlecn
-  \xauatcleardoublepage
-  \xauat@maketitleen
-  \clearpage
+  \xauat@cover@start
+  \xauat@cover@cn
+  \xauat@cover@nextpage
+  \xauat@cover@en
+  \xauat@cover@end
 }
 \renewcommand\maketitle{\makecover}
 
@@ -890,12 +1079,9 @@
 }
 
 \newcommand{\makechineseinnercover}{%
-  \xauatcleardoublepage
-  \@mainmatterfalse
-  \pagenumbering{gobble}%
-  \pagestyle{xauat@empty}%
-  \xauat@maketitlecn
-  \clearpage
+  \xauat@cover@start
+  \xauat@cover@cn
+  \xauat@cover@end
 }
 
 \makeatother

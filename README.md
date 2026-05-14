@@ -45,7 +45,7 @@
 
 当前第二阶段已经开始把模板从“可编译骨架”扩展为“可写论文模板”：
 
-- 统一无编号章节入口，用于摘要、声明、目录、主要符号表、参考文献、致谢等页面。
+- 按 XAUAT 撰写标准区分前置、主体、结尾部分，并为不同页面类型建立入口。
 - 图、表、子图、公式基础格式集中在 `src/xauatthesis-writing.sty`。
 - 公式按章编号，当前形式为 `(1-1)`。
 - 表格支持 `booktabs` 三线表和 `\xauattablenote{...}` 表注。
@@ -89,9 +89,9 @@ blind-acknowledgement = hide | placeholder | show
 \XAUATaddbibresource{../../ref/refs.bib}
 ```
 
-## 前置部分入口
+## 页面部分入口
 
-模板推荐把前置部分拆成独立命令调用，避免一个总命令同时控制封面、委员会页、声明页、摘要和目录：
+模板推荐按学校撰写标准组织主文档：前置部分只包含封面、指导教师团队页、答辩委员会页和声明页；中英文摘要、目录、主要符号表、正文、参考文献和致谢属于主体部分；附录资料和成果清单属于结尾部分。
 
 ```tex
 \begin{document}
@@ -108,7 +108,7 @@ blind-acknowledgement = hide | placeholder | show
 % 版权声明页
 \makecopyrightpage
 
-% 摘要、目录等前置正文阶段
+% 主体部分：摘要、目录、主要符号表
 \frontmatter
 \input{data/abstract-cn}
 \input{data/abstract-en}
@@ -120,7 +120,9 @@ blind-acknowledgement = hide | placeholder | show
 \input{data/chap01}
 \input{data/chap02}
 \printXAUATbibliography
+\input{data/acknowledgements}
 
+% 结尾部分：附录资料、成果清单
 \appendix
 \input{data/appendix}
 
@@ -129,7 +131,7 @@ blind-acknowledgement = hide | placeholder | show
 \end{document}
 ```
 
-其中 `\frontmatter` 只负责进入摘要、目录阶段，设置罗马页码和前置页眉；它不再生成封面或其他功能页。
+其中 `\frontmatter` 只是沿用 LaTeX 的页码状态命令，用来进入摘要、目录、主要符号表等罗马页码阶段；它不代表学校撰写标准中的“前置部分”，也不再生成封面或其他功能页。
 
 需要使用签字扫描件时，可将签字扫描 PDF 放在 `assets/scan/` 目录下。以下文件存在时，模板会自动用扫描件替换对应页面；文件不存在时，仍正常生成 LaTeX 页面：
 

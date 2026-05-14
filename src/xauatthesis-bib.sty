@@ -2,6 +2,8 @@
 \ProvidesFile{xauatthesis-bib.sty}
   [2026/05/06 v0.2 Bibliography support for XAUAT thesis template]
 
+\makeatletter
+
 \IfFileExists{gb7714-2015.bbx}
   {
     \xauatifbibauthoryear
@@ -45,8 +47,10 @@
 \newcommand{\XAUATaddbibresource}[1]{\addbibresource{#1}}
 
 \newcommand{\printXAUATbibliography}{%
-  \xauatunnumberedchapter{\xauatBibliographyName}%
+  \xauat@bibliography@start{\xauatBibliographyName}%
   \printbibliography[heading=none]%
 }
+
+\makeatother
 
 \endinput

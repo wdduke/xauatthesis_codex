@@ -142,6 +142,7 @@
 \tl_new:N \g_xauat_thesis_type_en_tl
 \tl_new:N \g_xauat_keywords_cn_tl
 \tl_new:N \g_xauat_keywords_en_tl
+\tl_new:N \g_xauat_funding_cn_tl
 \tl_new:N \g_xauat_committee_chair_name_tl
 \tl_new:N \g_xauat_committee_chair_title_tl
 \tl_new:N \g_xauat_committee_chair_affiliation_tl
@@ -207,6 +208,7 @@
     thesis-type-en .tl_gset:N = \g_xauat_thesis_type_en_tl,
     keywords-cn .tl_gset:N = \g_xauat_keywords_cn_tl,
     keywords-en .tl_gset:N = \g_xauat_keywords_en_tl,
+    funding-cn .tl_gset:N = \g_xauat_funding_cn_tl,
     committee-chair-name .tl_gset:N = \g_xauat_committee_chair_name_tl,
     committee-chair-title .tl_gset:N = \g_xauat_committee_chair_title_tl,
     committee-chair-affiliation .tl_gset:N = \g_xauat_committee_chair_affiliation_tl,
@@ -368,6 +370,7 @@
 \NewDocumentCommand \xauatThesisTypeEN {} { \tl_use:N \g_xauat_thesis_type_en_tl }
 \NewDocumentCommand \xauatKeywordsCN {} { \tl_use:N \g_xauat_keywords_cn_tl }
 \NewDocumentCommand \xauatKeywordsEN {} { \tl_use:N \g_xauat_keywords_en_tl }
+\NewDocumentCommand \xauatFundingCN {} { \tl_use:N \g_xauat_funding_cn_tl }
 \NewDocumentCommand \xauatCommitteeChairName {} { \tl_use:N \g_xauat_committee_chair_name_tl }
 \NewDocumentCommand \xauatCommitteeChairTitle {} { \tl_use:N \g_xauat_committee_chair_title_tl }
 \NewDocumentCommand \xauatCommitteeChairAffiliation {} { \tl_use:N \g_xauat_committee_chair_affiliation_tl }

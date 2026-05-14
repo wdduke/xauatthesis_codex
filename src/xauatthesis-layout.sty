@@ -50,46 +50,99 @@
   \xauatifprint{\cleardoublepage}{\clearpage}%
 }
 \providecommand{\phantomsection}{}
-\newcommand{\xauatunnumberedchapter}[1]{%
+\NewDocumentCommand{\xauat@chapter}{s o m o}{%
+  \IfBooleanF{#1}{%
+    \PackageError{xauatthesis-layout}
+      {Use the starred form \string\xauat@chapter*}
+      {Internal unnumbered chapters must use the starred form.}%
+  }%
   \xauatcleardoublepage
-  \chapter*{#1}%
-  \phantomsection
-  \addcontentsline{toc}{chapter}{#1}%
-  \markboth{#1}{#1}%
+  \IfValueTF{#2}{%
+    \def\xauat@toc@entry{#2}%
+    \ifx\xauat@toc@entry\@empty\else
+      \phantomsection
+      \addcontentsline{toc}{chapter}{#2}%
+    \fi
+  }{%
+    \phantomsection
+    \addcontentsline{toc}{chapter}{#3}%
+  }%
+  \chapter*{#3}%
+  \IfValueTF{#4}{%
+    \def\xauat@mark@entry{#4}%
+    \ifx\xauat@mark@entry\@empty
+      \markboth{}{}%
+    \else
+      \markboth{#4}{#4}%
+    \fi
+  }{%
+    \markboth{#3}{#3}%
+  }%
   \thispagestyle{xauat@plain}%
 }
+\newcommand{\xauatunnumberedchapter}[1]{\xauat@chapter*{#1}}
 \newcommand{\xauatprelimchapter}[1]{%
+  \xauat@chapter*[]{#1}%
+}
+\NewDocumentCommand{\xauat@startpage}{O{} m O{xauat@plain}}{%
   \xauatcleardoublepage
-  \chapter*{#1}%
   \phantomsection
-  \markboth{#1}{#1}%
-  \thispagestyle{xauat@plain}%
+  \def\xauat@toc@entry{#1}%
+  \ifx\xauat@toc@entry\@empty\else
+    \addcontentsline{toc}{chapter}{#1}%
+  \fi
+  \markboth{#2}{#2}%
+  \thispagestyle{#3}%
+}
+\newcommand{\xauatstartunnumberedpage}[2]{%
+  \xauat@startpage[#1]{#2}%
+}
+\newcommand{\xauatstartfrontpage}[1]{%
+  \xauat@startpage[]{#1}%
+}
+\newcommand{\xauat@abstract@start}[1]{%
+  \xauatstartunnumberedpage{#1}{#1}%
+}
+\newcommand{\xauat@toc@start}[1]{%
+  \xauat@chapter*[]{#1}%
+}
+\newcommand{\xauat@list@start}[1]{%
+  \xauat@chapter*{#1}%
+}
+\newcommand{\xauat@denotation@start}[1]{%
+  \xauatunnumberedchapter{#1}%
+}
+\newcommand{\xauat@mainchapter@start}[1]{%
+  \chapter{#1}%
+}
+\newcommand{\xauat@bibliography@start}[1]{%
+  \xauatunnumberedchapter{#1}%
+}
+\newcommand{\xauat@acknowledgements@start}[1]{%
+  \xauatunnumberedchapter{#1}%
+}
+\newcommand{\xauat@appendix@start}[1]{%
+  \chapter{#1}%
+}
+\newcommand{\xauat@achievement@start}[1]{%
+  \xauatunnumberedchapter{#1}%
 }
 \newcommand{\xauatfrontpagination}{%
   \xauatcleardoublepage
   \pagenumbering{Roman}%
   \pagestyle{xauat@front}%
 }
-\let\xauat@orig@tableofcontents\tableofcontents
-\let\xauat@orig@listoffigures\listoffigures
-\let\xauat@orig@listoftables\listoftables
 \renewcommand{\tableofcontents}{%
-  \xauatcleardoublepage
-  \xauat@orig@tableofcontents
-  \markboth{\xauatContentsName}{\xauatContentsName}%
-  \thispagestyle{xauat@front}%
+  \xauat@toc@start{\xauatContentsName}%
+  \@starttoc{toc}%
 }
 \renewcommand{\listoffigures}{%
-  \xauatcleardoublepage
-  \xauat@orig@listoffigures
-  \markboth{\listfigurename}{\listfigurename}%
-  \thispagestyle{xauat@front}%
+  \xauat@list@start{\listfigurename}%
+  \@starttoc{lof}%
 }
 \renewcommand{\listoftables}{%
-  \xauatcleardoublepage
-  \xauat@orig@listoftables
-  \markboth{\listtablename}{\listtablename}%
-  \thispagestyle{xauat@front}%
+  \xauat@list@start{\listtablename}%
+  \@starttoc{lot}%
 }
 \newcommand{\listoffiguresandtables}{%
   \listoffigures
@@ -175,18 +228,45 @@
     number = \arabic{chapter},
     aftername = \quad,
     format = \centering\heiti\zihao{3},
-    beforeskip = 0pt,
-    afterskip = 20pt
+    beforeskip = 22bp,
+    afterskip = 22bp
   },
   section = {
     format = \raggedright\heiti\zihao{4},
+    beforeskip = 11bp,
+    afterskip = 11bp,
     aftername = \quad
   },
   subsection = {
     format = \raggedright\songti\bfseries\zihao{-4},
+    beforeskip = 11bp,
+    afterskip = 11bp,
     aftername = \quad
   }
 }
+
+\makeatletter
+\newcommand{\xauat@toc@chapter@font}{\heiti\zihao{-4}\setlength{\baselineskip}{22bp}\selectfont}
+\newcommand{\xauat@toc@entry@font}{\songti\zihao{-4}\setlength{\baselineskip}{22bp}\selectfont}
+\titlecontents{chapter}
+  [0pt]
+  {\xauat@toc@chapter@font}
+  {\contentspush{\thecontentslabel\quad}}
+  {}
+  {\titlerule*[0.5em]{.}\contentspage}
+\titlecontents{section}
+  [2em]
+  {\xauat@toc@entry@font}
+  {\contentspush{\thecontentslabel\quad}}
+  {}
+  {\titlerule*[0.5em]{.}\contentspage}
+\titlecontents{subsection}
+  [4em]
+  {\xauat@toc@entry@font}
+  {\contentspush{\thecontentslabel\quad}}
+  {}
+  {\titlerule*[0.5em]{.}\contentspage}
+\makeatother
 
 \setcounter{secnumdepth}{3}
 \setcounter{tocdepth}{3}
