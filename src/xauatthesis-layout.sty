@@ -100,17 +100,75 @@
 \newcommand{\xauatstartfrontpage}[1]{%
   \xauat@startpage[]{#1}%
 }
-\newcommand{\xauat@abstract@start}[1]{%
-  \xauatstartunnumberedpage{#1}{#1}%
+\NewDocumentCommand{\xauat@abstract@start}{o m}{%
+  \IfValueTF{#1}
+    {\xauatstartunnumberedpage{#1}{#2}}
+    {\xauatstartunnumberedpage{#2}{#2}}%
+}
+\newlength{\xauat@toc@titleTopCenterDistance}
+\setlength{\xauat@toc@titleTopCenterDistance}{0.7cm}
+\newlength{\xauat@toc@titleContentCenterDistance}
+\setlength{\xauat@toc@titleContentCenterDistance}{0.7cm}
+\newlength{\xauat@toc@titleLineSkip}
+\setlength{\xauat@toc@titleLineSkip}{0.5cm}
+\newlength{\xauat@toc@entryLineSkip}
+\setlength{\xauat@toc@entryLineSkip}{0.5cm}
+\newcommand{\xauat@toc@title@font}{%
+  \heiti\zihao{3}\setlength{\baselineskip}{\xauat@toc@titleLineSkip}\selectfont
 }
 \newcommand{\xauat@toc@start}[1]{%
-  \xauat@chapter*[]{#1}%
+  \xauatcleardoublepage
+  \phantomsection
+  \markboth{#1}{#1}%
+  \thispagestyle{xauat@plain}%
+  \begingroup
+    \parindent\z@
+    \vspace*{\dimexpr
+      \xauat@toc@titleTopCenterDistance - 0.5\xauat@toc@titleLineSkip
+    \relax}%
+    {\centering\xauat@toc@title@font #1\par}%
+    \vspace{\dimexpr
+      \xauat@toc@titleContentCenterDistance
+      - 0.5\xauat@toc@titleLineSkip
+      - 0.5\xauat@toc@entryLineSkip
+    \relax}%
+  \endgroup
 }
 \newcommand{\xauat@list@start}[1]{%
   \xauat@chapter*{#1}%
 }
+\newlength{\xauat@denotation@titleTopCenterDistance}
+\setlength{\xauat@denotation@titleTopCenterDistance}{0.7cm}
+\newlength{\xauat@denotation@titleTableTopDistance}
+\setlength{\xauat@denotation@titleTableTopDistance}{0.7cm}
+\newlength{\xauat@denotation@titleLineSkip}
+\setlength{\xauat@denotation@titleLineSkip}{0.5cm}
+\newlength{\xauat@denotation@rowLineSkip}
+\setlength{\xauat@denotation@rowLineSkip}{0.6cm}
+\newcommand{\xauat@denotation@title@font}{%
+  \heiti\zihao{3}\setlength{\baselineskip}{\xauat@denotation@titleLineSkip}\selectfont
+}
+\newcommand{\xauat@denotation@body@font}{%
+  \normalfont\rmfamily\songti\zihao{-4}%
+  \setlength{\baselineskip}{\xauat@denotation@rowLineSkip}\selectfont
+}
 \newcommand{\xauat@denotation@start}[1]{%
-  \xauatunnumberedchapter{#1}%
+  \xauatcleardoublepage
+  \phantomsection
+  \addcontentsline{toc}{chapter}{#1}%
+  \markboth{#1}{#1}%
+  \thispagestyle{xauat@plain}%
+  \begingroup
+    \parindent\z@
+    \vspace*{\dimexpr
+      \xauat@denotation@titleTopCenterDistance - 0.5\xauat@denotation@titleLineSkip
+    \relax}%
+    {\centering\xauat@denotation@title@font #1\par}%
+    \vspace{\dimexpr
+      \xauat@denotation@titleTableTopDistance
+      - 0.5\xauat@denotation@titleLineSkip
+    \relax}%
+  \endgroup
 }
 \newcommand{\xauat@mainchapter@start}[1]{%
   \chapter{#1}%
@@ -163,7 +221,7 @@
   \hrule height 0.25pt
 }
 \newcommand{\xauat@headerfont}{\songti\zihao{5}}
-\newcommand{\xauat@pagefont}{\rmfamily\zihao{5}}
+\newcommand{\xauat@pagefont}{\normalfont\rmfamily\zihao{5}\selectfont}
 
 \fancypagestyle{xauat@front}{%
   \fancyhf{}%
@@ -219,12 +277,13 @@
 \makeatother
 
 \renewcommand{\chaptermark}[1]{%
-  \markboth{第\thechapter 章\quad #1}{第\thechapter 章\quad #1}%
+  \markboth{\CTEXifname{\CTEXthechapter\quad}{}#1}{\CTEXifname{\CTEXthechapter\quad}{}#1}%
 }
 
+\renewcommand{\appendixname}{附录}
 \ctexset{
   chapter = {
-    name = {第,章},
+    name = {第\ ,\ 章},
     number = \arabic{chapter},
     aftername = \quad,
     format = \centering\heiti\zihao{3},
@@ -246,8 +305,11 @@
 }
 
 \makeatletter
-\newcommand{\xauat@toc@chapter@font}{\heiti\zihao{-4}\setlength{\baselineskip}{22bp}\selectfont}
-\newcommand{\xauat@toc@entry@font}{\songti\zihao{-4}\setlength{\baselineskip}{22bp}\selectfont}
+\newcommand{\xauat@toc@entry@font}{%
+  \normalfont\rmfamily\heiti\zihao{-4}%
+  \setlength{\baselineskip}{\xauat@toc@entryLineSkip}\selectfont
+}
+\newcommand{\xauat@toc@chapter@font}{\xauat@toc@entry@font}
 \titlecontents{chapter}
   [0pt]
   {\xauat@toc@chapter@font}
@@ -255,13 +317,13 @@
   {}
   {\titlerule*[0.5em]{.}\contentspage}
 \titlecontents{section}
-  [2em]
+  [1em]
   {\xauat@toc@entry@font}
   {\contentspush{\thecontentslabel\quad}}
   {}
   {\titlerule*[0.5em]{.}\contentspage}
 \titlecontents{subsection}
-  [4em]
+  [2em]
   {\xauat@toc@entry@font}
   {\contentspush{\thecontentslabel\quad}}
   {}

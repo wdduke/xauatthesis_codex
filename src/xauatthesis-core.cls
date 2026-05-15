@@ -15,6 +15,7 @@
 \tl_new:N \g_xauat_advisor_mode_tl
 \tl_new:N \g_xauat_discipline_type_tl
 \tl_new:N \g_xauat_bib_style_tl
+\tl_new:N \g_xauat_denotation_sort_tl
 \tl_new:N \g_xauat_blind_achievements_tl
 \tl_new:N \g_xauat_blind_acknowledgement_tl
 
@@ -56,6 +57,10 @@
       { auto, numeric, authoryear }
       { \tl_gset:Nn \g_xauat_bib_style_tl {#1} },
     bib-style .initial:n = auto,
+    denotation-sort .choices:nn =
+      { manual, auto }
+      { \tl_gset:Nn \g_xauat_denotation_sort_tl {#1} },
+    denotation-sort .initial:n = manual,
     blind-achievements .choices:nn =
       { hide, anonymous, show }
       { \tl_gset:Nn \g_xauat_blind_achievements_tl {#1} },
@@ -311,6 +316,8 @@
           {#2}
       }
   }
+\NewDocumentCommand \xauatifdenotationauto { m m }
+  { \str_if_eq:VnTF \g_xauat_denotation_sort_tl { auto } {#1} {#2} }
 \NewDocumentCommand \xauatifadvisorteam { m m }
   { \str_if_eq:VnTF \g_xauat_advisor_mode_tl { team } {#1} {#2} }
 \NewDocumentCommand \xauatifassociateadvisor { m m }

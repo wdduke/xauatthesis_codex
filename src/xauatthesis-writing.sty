@@ -33,21 +33,87 @@
   {\zihao{5}\noindent 注：#1\par}%
 }
 
-\newenvironment{xauatdenotation}{%
-  \xauat@denotation@start{\xauatDenotationName}%
-  \renewcommand{\arraystretch}{1.25}%
-  \begin{longtable}
-    {>{\centering\arraybackslash}p{0.22\textwidth}
-     p{0.46\textwidth}
-     >{\centering\arraybackslash}p{0.20\textwidth}}
-    \toprule
-    符号 & 含义 & 单位\\
-    \midrule
-    \endhead
-}{%
-    \bottomrule
-  \end{longtable}
+\newlength{\xauat@denotation@symbolWidth}
+\newlength{\xauat@denotation@meaningWidth}
+\ExplSyntaxOn
+\seq_new:N \g_xauat_denotation_entries_seq
+\cs_new:Npn \xauat_denotation_entry_key:n #1
+  { \xauat_denotation_entry_key:w #1 \q_stop }
+\cs_new:Npn \xauat_denotation_entry_key:w
+  \xauat_denotation_entry:nnn #1#2#3 \q_stop
+  {#1}
+\cs_new_protected:Npn \xauat_denotation_entry:nnn #1#2#3
+  { #2 & #3 }
+\cs_new_protected:Npn \xauat_denotation_add:nnn #1#2#3
+  {
+    \seq_gput_right:Nn \g_xauat_denotation_entries_seq
+      { \xauat_denotation_entry:nnn {#1} {#2} {#3} }
+  }
+\cs_new_protected:Npn \xauat_denotation_sort:
+  {
+    \seq_sort:Nn \g_xauat_denotation_entries_seq
+      {
+        \str_compare:eNeTF
+          { \xauat_denotation_entry_key:n {##1} }
+          >
+          { \xauat_denotation_entry_key:n {##2} }
+          { \sort_return_swapped: }
+          { \sort_return_same: }
+      }
+  }
+\cs_new_protected:Npn \xauat_denotation_print_entries:
+  {
+    \seq_map_inline:Nn \g_xauat_denotation_entries_seq
+      { ##1 \\ }
+  }
+\NewDocumentCommand \xauatsym { O{} m m }
+  {
+    \xauatifdenotationauto
+      { \xauat_denotation_add:nnn {#1} {#2} {#3} }
+      { #2 & #3 \\ }
+  }
+\newcommand{\xauat@denotation@table@begin}[1]{%
+  \begingroup
+  \xauat@denotation@body@font
+  \setlength{\LTleft}{0pt}%
+  \setlength{\LTright}{0pt}%
+  \setlength{\LTpre}{0pt}%
+  \setlength{\LTpost}{0pt}%
+  \setlength{\tabcolsep}{0pt}%
+  \setlength{\extrarowheight}{0pt}%
+  \setlength{\xauat@denotation@symbolWidth}{#1}%
+  \setlength{\xauat@denotation@meaningWidth}{%
+    \dimexpr\textwidth - \xauat@denotation@symbolWidth\relax
+  }%
+  \renewcommand{\arraystretch}{1}%
+  \begin{longtable}{@{}%
+    >{\centering\arraybackslash}p{\xauat@denotation@symbolWidth}%
+    >{\raggedright\arraybackslash}p{\xauat@denotation@meaningWidth}%
+    @{}}
 }
+\newcommand{\xauat@denotation@table@end}{%
+  \end{longtable}
+  \endgroup
+}
+\NewDocumentEnvironment{xauatdenotation}{O{3.4cm}}{%
+  \xauat@denotation@start{\xauatDenotationName}%
+  \xauatifdenotationauto
+    {%
+      \setlength{\xauat@denotation@symbolWidth}{#1}%
+      \seq_gclear:N \g_xauat_denotation_entries_seq
+    }
+    {\xauat@denotation@table@begin{#1}}%
+}{%
+  \xauatifdenotationauto
+    {%
+      \xauat_denotation_sort:
+      \xauat@denotation@table@begin{\xauat@denotation@symbolWidth}%
+      \xauat_denotation_print_entries:
+      \xauat@denotation@table@end
+    }
+    {\xauat@denotation@table@end}%
+}
+\ExplSyntaxOff
 
 \makeatother
 
